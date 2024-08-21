@@ -38,7 +38,7 @@ El proyecto está desarrollado con las siguientes tecnologías modernas:
 | **Gonzalez Axel**  | Desarrollador Front-End  | [AxelGzlzz](https://github.com/AxelGzlzz)           | 3813311342          |
 | **Pereyra Franco** | Desarrollador Front-End  | [FrancoPereyra2](https://github.com/FrancoPereyra2)   | 3814988807        |
 | **Recalde Leonardo**| Desarrollador Front-End | [leorecalde](https://github.com/leorecalde) | 3816233622     |
-| **Vargas Ismael**| Desarrollador Front-End | []() | 3815874168        |
+| **Vargas Ismael**| Desarrollador Front-End | [joseismaelvargas](https://github.com/joseismaelvargas) | 3815874168        |
 
 ---
 
