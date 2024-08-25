@@ -10,4 +10,8 @@ body{
     flex-grow: 1;
     
     }
-    
+
+    .tamañoLogoGyF {
+        max-width: 20px;
+        max-height: 20px;
+      }
