@@ -106,7 +106,7 @@
                     <th>ID</th>
                     <th>GRUPO</th>
                     <th>CATEGORIA</th>
-                    <th>CANCION</th>
+                    <th>TITULO</th>
                     <th>ACCIONES</th>
                 
 
@@ -155,7 +155,7 @@
         
 
          <section class="text-end my-5">
-         <button class="btn btn-outline-secondary border-5" data-bs-toggle="modal" data-bs-target="#ModalAdminCanciones"><b>AGREGAR CANCION</b></button>
+         <button class="btn btn-outline-light border-5" data-bs-toggle="modal" data-bs-target="#ModalAdminCanciones"><b>AGREGAR CANCION</b></button>
 
          </section>
 
@@ -171,17 +171,13 @@
 <div class="modal fade" id="ModalAdminCanciones" tabindex="-1" aria-labelledby="ModalAdminCancionesLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-black bg-gradient text-white">
         <h2 class="modal-title fs-5" id="ModalAdminCancionesLabel">Agregue/Modifique Sus Canciones</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body ">
             <form>
-
-              <div class="mb-3">
-                <label for="Titulo" class="form-label">Titulo*</label>
-                 <input type="text" class="form-control border border-3 border-info-subtle" id="Titulo" minlength="6" maxlength="100" placeholder="" required>
-              </div>
+          
               <div class="mb-3">
                 <label for="Grupo" class="form-label">Grupo*</label>
                  <input type="text" class="form-control border border-3 border-info-subtle" id="Grupo"  minlength="6" maxlength="100" placeholder="Las Pastillas del Abuelo" required>
@@ -191,7 +187,11 @@
                  <input type="text" class="form-control border border-3 border-info-subtle" id="Categoria"  minlength="6" maxlength="100" placeholder="Rock" required>
               </div>
               <div class="mb-3">
-                <label for="Imagen" class="form-label">Imagen*</label>
+                <label for="Titulo" class="form-label">Titulo*</label>
+                 <input type="text" class="form-control border border-3 border-info-subtle" id="Titulo" minlength="6" maxlength="100" placeholder="" required>
+              </div>
+              <div class="mb-3">
+                <label for="Imagen" class="form-label">Imagen( Url )*</label>
                  <input type="text" class="form-control border border-3 border-info-subtle" id="Imagen" minlength="6" maxlength="100" placeholder="Url" required>
               </div>
               <div class="mb-3">
@@ -199,13 +199,17 @@
                  <input type="text" class="form-control border border-3 border-info-subtle" id="Duracion"  minlength="6" maxlength="100" placeholder="3:40" required>
               </div>
               <div class="mb-3">
-                <label for="Cancion" class="form-label">Cancion*</label>
+                <label for="Cancion" class="form-label">Cancion( Url )*</label>
                  <input type="text" class="form-control border border-3 border-info-subtle" id="Cancion"  minlength="6" maxlength="100" placeholder="¿Que es Dios?" required>
               </div>
-              <div class="text-end my-2">
-                <button class="btn btn-info" type="submit">AGREGAR</button>
+            
+              <div class="modal-footer mt-3  ">
 
+                <div class="text-end ">
+                <button class="btn btn-info" type="submit">Agregar</button>
+              
               </div>
+            </div>
             </form>
 
 
