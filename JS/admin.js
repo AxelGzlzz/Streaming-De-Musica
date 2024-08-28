@@ -37,24 +37,59 @@ const mostrarModal =() => {
     }
 
 
-    
+
+
+    /////////CREAR////////////////////////////////////
     const crearCanciones =(e)=>{
         e.preventDefault();
  
    const NuevaCancion = new Canciones(Grupo.value,Categoria.value,Titulo.value,Imagen.value,Duracion.value,Cancion.value);
- 
    listadoCanciones.push(NuevaCancion);
-   console.log(NuevaCancion);
    limpiarFormulario();
-   
  guardarEnLocalStorage();
-
+ dibujarFila(NuevaCancion);
     
     }
+///////////CIERRE CREAR////////////////////////////////
+
+
+
+    const cargaCancionesInicial=()=>{
+
+        if(listadoCanciones.lenght !=0){
+                                     //invento variable canciones
+               listadoCanciones.map((canciones) =>dibujarFila(canciones))
+
+        }
+    }
     
-    
+    const dibujarFila =(canciones)=> {
+
+      const tabla =document.querySelector('tbody');
+      tabla.innerHTML +=`<tr>
+                  <td>${canciones.Id}</td>
+                  <td>${canciones.Grupo}</td>
+                  <td>${canciones.Categoria}</td>
+                  <td>${canciones.Titulo}</td>
+                  <td><audio controls autoplay>
+                    <source src="${canciones.Cancion}" type="audio/mpeg">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio></td>
+                  <td>
+                    <button class="btn btn-outline-danger mb-2 mb-md-0">Eliminar</button>
+                    <button class="btn btn-outline-success">Modificar</button>
+                  </td>
+
+                </tr>`
+
+    }
+   
+
+
+
 
 
 
     btnCanciones.addEventListener('click',mostrarModal);
     formularioCanciones.addEventListener('submit',crearCanciones);
+    cargaCancionesInicial();
