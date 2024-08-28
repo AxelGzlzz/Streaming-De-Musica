@@ -1,72 +1,60 @@
 import Canciones from "./ClassCanciones.js";
 
+const btnCanciones = document.getElementById("btnCanciones");
+const formularioCanciones = document.getElementById("formularioCanciones");
+const ModalAdminCanciones = new bootstrap.Modal(
+  document.getElementById("ModalAdminCanciones")
+);
+const Grupo = document.getElementById("Grupo");
+const Categoria = document.getElementById("Categoria");
+const Titulo = document.getElementById("Titulo");
+const Imagen = document.getElementById("Imagen");
+const Duracion = document.getElementById("Duracion");
+const Cancion = document.getElementById("Cancion");
+const Tabla = document.querySelector("tbody");
+const listadoCanciones =
+  JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
 
-const btnCanciones= document.getElementById('btnCanciones');
-const formularioCanciones =document.getElementById('formularioCanciones');
-const ModalAdminCanciones =new bootstrap.Modal(document.getElementById('ModalAdminCanciones'));
-const  Grupo =document.getElementById('Grupo');
-const  Categoria =document.getElementById('Categoria');
-const  Titulo =document.getElementById('Titulo');
-const  Imagen =document.getElementById('Imagen');
-const  Duracion =document.getElementById('Duracion');
-const  Cancion =document.getElementById('Cancion');
-const listadoCanciones = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
+const mostrarModal = () => {
+  ModalAdminCanciones.show();
+};
 
+const limpiarFormulario = () => {
+  formularioCanciones.reset();
+};
 
+const guardarEnLocalStorage = () => {
+  localStorage.setItem("listadoCancionesKey", JSON.stringify(listadoCanciones));
+};
 
+/////////CREAR////////////////////////////////////
+const crearCanciones = (e) => {
+  e.preventDefault();
 
-
-const mostrarModal =() => {
-
-
-    ModalAdminCanciones.show();
-    
-    }
-
-    
-    const limpiarFormulario=()=>{
-
-        formularioCanciones.reset();
-    }
-
-   
-    const guardarEnLocalStorage =() => {
-
-     localStorage.setItem('listadoCancionesKey',JSON.stringify(listadoCanciones));
-
-    }
-
-
-
-
-    /////////CREAR////////////////////////////////////
-    const crearCanciones =(e)=>{
-        e.preventDefault();
- 
-   const NuevaCancion = new Canciones(Grupo.value,Categoria.value,Titulo.value,Imagen.value,Duracion.value,Cancion.value);
-   listadoCanciones.push(NuevaCancion);
-   limpiarFormulario();
- guardarEnLocalStorage();
- dibujarFila(NuevaCancion);
-    
-    }
+  const NuevaCancion = new Canciones(
+    Grupo.value,
+    Categoria.value,
+    Titulo.value,
+    Imagen.value,
+    Duracion.value,
+    Cancion.value
+  );
+  listadoCanciones.push(NuevaCancion);
+  limpiarFormulario();
+  guardarEnLocalStorage();
+  dibujarFila(NuevaCancion);
+};
 ///////////CIERRE CREAR////////////////////////////////
 
+const cargaCancionesInicial = () => {
+  if (listadoCanciones.lenght != 0) {
+    //invento variable canciones
+    listadoCanciones.map((canciones) => dibujarFila(canciones));
+  }
+};
 
-
-    const cargaCancionesInicial=()=>{
-
-        if(listadoCanciones.lenght !=0){
-                                     //invento variable canciones
-               listadoCanciones.map((canciones) =>dibujarFila(canciones))
-
-        }
-    }
-    
-    const dibujarFila =(canciones)=> {
-
-      const tabla =document.querySelector('tbody');
-      tabla.innerHTML +=`<tr>
+const dibujarFila = (canciones) => {
+  Tabla.innerHTML += `<tr>
                   <td>${canciones.Id}</td>
                   <td>${canciones.Grupo}</td>
                   <td>${canciones.Categoria}</td>
@@ -76,20 +64,48 @@ const mostrarModal =() => {
                     Tu navegador no soporta la reproducción de audio.
                 </audio></td>
                   <td>
-                    <button class="btn btn-outline-danger mb-2 mb-md-0">Eliminar</button>
+                    <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
                     <button class="btn btn-outline-success">Modificar</button>
                   </td>
 
-                </tr>`
+                </tr>`;
+};
 
+///////////////////BORRRAR///////////////////////////
+window.borrarCanciones = (Id) => {
+  Swal.fire({
+    title: "¿Seguro que quieres borrar la cancion?",
+    text: "Al borrar no habra ninguna forma de recuperar los datos!!!!!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#252850",
+    cancelButtonColor: "#8B0000",
+    confirmButtonText: "Borrar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //1bucar la poscion del elemnto a borrar   findIndex
+      const posCanciones = listadoCanciones.findIndex(
+        (canciones) => canciones.Id === Id
+      );
+      //2usaremos Splice para borrar un contacto del array la posicion del elemento a borrar
+      listadoCanciones.splice(posCanciones, 1);
+      //3actualizar local Storage
+      guardarEnLocalStorage();
+      //4actualizar tabla
+
+      Tabla.removeChild(Tabla.children[posCanciones]);
+
+      Swal.fire({
+        title: "Eliminaste la cancion Seleccionada!!!",
+        text: "la cancion fue eliminado correctamente.",
+        icon: "success",
+      });
     }
-   
+  });
+};
+//////////////////CIERRE BORRAR//////////////////////////
 
-
-
-
-
-
-    btnCanciones.addEventListener('click',mostrarModal);
-    formularioCanciones.addEventListener('submit',crearCanciones);
-    cargaCancionesInicial();
+btnCanciones.addEventListener("click", mostrarModal);
+formularioCanciones.addEventListener("submit", crearCanciones);
+cargaCancionesInicial();
