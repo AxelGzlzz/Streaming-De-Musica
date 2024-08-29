@@ -12,8 +12,7 @@ const Imagen = document.getElementById("Imagen");
 const Duracion = document.getElementById("Duracion");
 const Cancion = document.getElementById("Cancion");
 const Tabla = document.querySelector("tbody");
-const listadoCanciones =
-  JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
+const listadoCanciones =JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
 
 const mostrarModal = () => {
   ModalAdminCanciones.show();
@@ -46,6 +45,8 @@ const crearCanciones = (e) => {
 };
 ///////////CIERRE CREAR////////////////////////////////
 
+
+
 const cargaCancionesInicial = () => {
   if (listadoCanciones.lenght != 0) {
     //invento variable canciones
@@ -71,7 +72,8 @@ const dibujarFila = (canciones) => {
                 </tr>`;
 };
 
-///////////////////BORRRAR///////////////////////////
+
+/////////BORRAR CANCIONES/////////////////
 window.borrarCanciones = (Id) => {
   Swal.fire({
     title: "¿Seguro que quieres borrar la cancion?",
@@ -84,16 +86,15 @@ window.borrarCanciones = (Id) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      //1bucar la poscion del elemnto a borrar   findIndex
+     
       const posCanciones = listadoCanciones.findIndex(
         (canciones) => canciones.Id === Id
       );
-      //2usaremos Splice para borrar un contacto del array la posicion del elemento a borrar
+     
       listadoCanciones.splice(posCanciones, 1);
-      //3actualizar local Storage
+      
       guardarEnLocalStorage();
-      //4actualizar tabla
-
+     
       Tabla.removeChild(Tabla.children[posCanciones]);
 
       Swal.fire({
@@ -105,6 +106,16 @@ window.borrarCanciones = (Id) => {
   });
 };
 //////////////////CIERRE BORRAR//////////////////////////
+
+
+
+
+
+
+
+
+
+
 
 btnCanciones.addEventListener("click", mostrarModal);
 formularioCanciones.addEventListener("submit", crearCanciones);
