@@ -12,7 +12,9 @@ const Imagen = document.getElementById("Imagen");
 const Duracion = document.getElementById("Duracion");
 const Cancion = document.getElementById("Cancion");
 const Tabla = document.querySelector("tbody");
-const listadoCanciones =JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
+const listadoCanciones =
+  JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
+let estoyCreandoo = true;
 
 const mostrarModal = () => {
   ModalAdminCanciones.show();
@@ -26,10 +28,21 @@ const guardarEnLocalStorage = () => {
   localStorage.setItem("listadoCancionesKey", JSON.stringify(listadoCanciones));
 };
 
-/////////CREAR////////////////////////////////////
-const crearCanciones = (e) => {
-  e.preventDefault();
 
+const administradorDeCanciones = (e) => {
+  e.preventDefault();
+  if (estoyCreandoo) {
+    crearCanciones();
+  } else {
+    //poner lo de editar ......
+  }
+};
+
+
+/////////CREAR////////////////////////////////////
+const crearCanciones = () => {
+ 
+  estoyCreandoo = true;
   const NuevaCancion = new Canciones(
     Grupo.value,
     Categoria.value,
@@ -42,10 +55,8 @@ const crearCanciones = (e) => {
   limpiarFormulario();
   guardarEnLocalStorage();
   dibujarFila(NuevaCancion);
+  laCancionfuecreadoventana();
 };
-///////////CIERRE CREAR////////////////////////////////
-
-
 
 const cargaCancionesInicial = () => {
   if (listadoCanciones.lenght != 0) {
@@ -71,6 +82,12 @@ const dibujarFila = (canciones) => {
 
                 </tr>`;
 };
+///////////CIERRE CREAR////////////////////////////////
+
+
+
+
+
 
 
 /////////BORRAR CANCIONES/////////////////
@@ -86,15 +103,14 @@ window.borrarCanciones = (Id) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-     
       const posCanciones = listadoCanciones.findIndex(
         (canciones) => canciones.Id === Id
       );
-     
+
       listadoCanciones.splice(posCanciones, 1);
-      
+
       guardarEnLocalStorage();
-     
+
       Tabla.removeChild(Tabla.children[posCanciones]);
 
       Swal.fire({
@@ -108,15 +124,20 @@ window.borrarCanciones = (Id) => {
 //////////////////CIERRE BORRAR//////////////////////////
 
 
-
-
-
-
+//////////////Ventana Cancion crear con exito/////////////
+const laCancionfuecreadoventana = () => {
+  Swal.fire({
+    title: "La Cancion Fue creada con exito!!",
+    text: "Disfrute su nueva cancionn!",
+    icon: "success",
+  });
+};
+//////////////Cierre Cancion Borrar con exito/////////////
 
 
 
 
 
 btnCanciones.addEventListener("click", mostrarModal);
-formularioCanciones.addEventListener("submit", crearCanciones);
+formularioCanciones.addEventListener("submit", administradorDeCanciones);
 cargaCancionesInicial();
