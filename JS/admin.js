@@ -1,4 +1,5 @@
 import Canciones from "./ClassCanciones.js";
+import { validarCantidadCaracteres } from "./validaciones.js";
 
 const btnCanciones = document.getElementById("btnCanciones");
 const formularioCanciones = document.getElementById("formularioCanciones");
@@ -44,6 +45,7 @@ const administradorDeCanciones = (e) => {
 const crearCanciones = () => {
  
   estoyCreandoo = true;
+  if (validarCantidadCaracteres(Grupo, 3, 30) === true){
   const NuevaCancion = new Canciones(
     Grupo.value,
     Categoria.value,
@@ -57,6 +59,7 @@ const crearCanciones = () => {
   guardarEnLocalStorage();
   dibujarFila(NuevaCancion);
   laCancionfuecreadoventana();
+}
 };
 
 const cargaCancionesInicial = () => {
