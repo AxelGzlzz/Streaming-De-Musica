@@ -15,11 +15,16 @@ const Tabla = document.querySelector("tbody");
 const listadoCanciones =
   JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
 let estoyCreandoo = true;
+let ID
+
+
 
 const mostrarModal = () => {
   ModalAdminCanciones.show();
 };
-
+const ocultarModal=()=>{
+  ModalAdminCanciones.hide()
+}
 const limpiarFormulario = () => {
   formularioCanciones.reset();
 };
@@ -32,9 +37,12 @@ const guardarEnLocalStorage = () => {
 const administradorDeCanciones = (e) => {
   e.preventDefault();
   if (estoyCreandoo) {
+
+  
     crearCanciones();
   } else {
-    //poner lo de editar ......
+  modificar()
+
   }
 };
 
@@ -42,7 +50,7 @@ const administradorDeCanciones = (e) => {
 
 /////////CREAR////////////////////////////////////
 const crearCanciones = () => {
- 
+ Grupo.value=""
   estoyCreandoo = true;
   const NuevaCancion = new Canciones(
     Grupo.value,
@@ -78,7 +86,7 @@ const dibujarFila = (canciones) => {
                 </audio></td>
                   <td>
                     <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
-                    <button class="btn btn-outline-success">Modificar</button>
+                    <button class="btn btn-outline-success" onclick="preparar('${canciones.Id}')" >Modificar</button>
                   </td>
 
                 </tr>`;
@@ -87,7 +95,26 @@ const dibujarFila = (canciones) => {
 
 
 
+// preparar para Modificar
+window.preparar=(Id)=>{
+ estoyCreandoo=false
 
+ ID=Id
+ mostrarModal()
+ 
+ const buscarMusica=listadoCanciones.find((cancion)=>cancion.Id===Id)
+if(buscarMusica){
+  Grupo.value=buscarMusica.Grupo;
+  Categoria.value=buscarMusica.Categoria;
+  Titulo.value=buscarMusica.Titulo;
+  Imagen.value=buscarMusica.Imagen;
+  Duracion.value=buscarMusica.Duracion;
+  Cancion.value=buscarMusica.Cancion;
+ 
+
+}
+ 
+}
 
 
 
@@ -124,6 +151,25 @@ window.borrarCanciones = (Id) => {
 };
 //////////////////CIERRE BORRAR//////////////////////////
 
+// modificar
+const modificar=()=>{
+  const editar=listadoCanciones.findIndex((cancion)=>cancion.Id===ID)
+  console.log(editar)
+ if(editar!==-1){
+  listadoCanciones[editar].Grupo=Grupo.value;
+  listadoCanciones[editar].Categoria=Categoria.value;
+  listadoCanciones[editar].Titulo=Titulo.value;
+  listadoCanciones[editar].Duracion=Duracion.value;
+  listadoCanciones[editar].Imagen=Imagen.value;
+  listadoCanciones[editar].Cancion=Cancion.value
+ 
+  guardarEnLocalStorage()
+ location.reload()
+
+  ocultarModal()
+ }
+  
+}
 
 //////////////Ventana Cancion crear con exito/////////////
 const laCancionfuecreadoventana = () => {
