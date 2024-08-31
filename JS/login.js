@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Datos de ejemplo para el login
     const validUser = {
         email: 'Grupo4Music@gmail.com',
-        contraseña: 'StreamingMusicGood10'
+        contraseña: 'Musica2024'
     };
 
     loginForm.addEventListener('submit', function(event) {
