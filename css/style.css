@@ -1,13 +1,28 @@
-body{
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+main {
+  flex-grow: 1;
+}
+
+.logoCancion img{
+    width: 35%;
+}
+
+@media all and (max-width: 767px){
+  .padreInfo{
     display: flex;
     flex-direction: column;
-    min-height:100vh;
-    }
-    
-    main{
-    
-    flex-grow: 1;
-    
-    }
-    
+    justify-content: center ;
+    align-items: center;
+  }
+ 
+  .infoCancion{
+    width: 95%;
+    margin-top: 20px;
+  }
+  
+}
