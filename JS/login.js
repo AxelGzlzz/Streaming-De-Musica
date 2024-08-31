@@ -3,25 +3,29 @@
 3- analizar si coinciden
 4- dar acceso
 */
-const logEmail = document.getElementById('loginEmail')
-const logContra = document.getElementById('loginPassword')
-const btnLogin = document.getElementById('btnLogin')
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('ingresarFormulario');
+    const adminLink = document.getElementById('mostrarAdmin');
 
-const validMail = (input) =>{
-    const expresionReg =
-    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-    if(expresionReg.test(input.value)){
-        input.className = "form-control is-valid";
-    return true;
-    }else{
-        input.className = "form-control is-invalid";
-    false;
-    }
-}
+    // Datos de ejemplo para el login
+    const validUser = {
+        email: 'Grupo4Music@gmail.com',
+        contraseña: 'StreamingMusicGood10'
+    };
 
-const login = () => {
-if (validMail(logEmail.value) === 'hola@music.com'){
-    //aqui va la logica para que redireccione el enlace
-}
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const contraseña = document.getElementById('loginPassword').value;
 
-}
+        if (email === validUser.email && contraseña === validUser.contraseña) {
+            // Mostrar el enlace del administrador
+            adminLink.style.display = 'block';
+            // Cerrar el modal
+            $('#modalLogin').modal('hide');
+        } else {
+            alert('Correo electrónico o contraseña incorrectos');
+        }
+    });
+});
