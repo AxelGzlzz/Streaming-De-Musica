@@ -1,5 +1,9 @@
 import Canciones from "./ClassCanciones.js";
 import { validarCantidadCaracteres } from "./validaciones.js";
+import { validarNumeros } from "./validaciones.js";
+import { validarNoSoloEspacios } from "./validaciones.js";
+import { validarURL } from "./validaciones.js";
+
 
 const btnCanciones = document.getElementById("btnCanciones");
 const formularioCanciones = document.getElementById("formularioCanciones");
@@ -29,7 +33,6 @@ const guardarEnLocalStorage = () => {
   localStorage.setItem("listadoCancionesKey", JSON.stringify(listadoCanciones));
 };
 
-
 const administradorDeCanciones = (e) => {
   e.preventDefault();
   if (estoyCreandoo) {
@@ -39,27 +42,47 @@ const administradorDeCanciones = (e) => {
   }
 };
 
-
-
 /////////CREAR////////////////////////////////////
 const crearCanciones = () => {
- 
   estoyCreandoo = true;
-  if (validarCantidadCaracteres(Grupo, 3, 30) === true){
-  const NuevaCancion = new Canciones(
-    Grupo.value,
-    Categoria.value,
-    Titulo.value,
-    Imagen.value,
-    Duracion.value,
-    Cancion.value
+
+  const existeCancion = listadoCanciones.some(
+    (cancion) => cancion.Titulo === Titulo.value
   );
-  listadoCanciones.push(NuevaCancion);
-  limpiarFormulario();
-  guardarEnLocalStorage();
-  dibujarFila(NuevaCancion);
-  laCancionfuecreadoventana();
-}
+
+  if (existeCancion) {
+    Swal.fire({
+      title: "Error",
+      text: "La canción ya existe.",
+      icon: "error",
+    });
+    return;
+  }
+  if (
+    validarCantidadCaracteres(Grupo, 3, 30) === true &&
+    validarCantidadCaracteres(Titulo, 3, 30) === true &&
+    validarCantidadCaracteres(Categoria, 3, 30) === true &&
+    validarNumeros(Duracion, 1, 600) === true &&
+    validarNoSoloEspacios(Grupo) &&
+    validarNoSoloEspacios(Titulo) &&
+    validarNoSoloEspacios(Categoria) &&
+    validarURL(Cancion) &&
+    validarURL(Imagen)
+  ) {
+    const NuevaCancion = new Canciones(
+      Grupo.value,
+      Categoria.value,
+      Titulo.value,
+      Imagen.value,
+      Duracion.value,
+      Cancion.value
+    );
+    listadoCanciones.push(NuevaCancion);
+    limpiarFormulario();
+    guardarEnLocalStorage();
+    dibujarFila(NuevaCancion);
+    laCancionfuecreadoventana();
+  }
 };
 
 const cargaCancionesInicial = () => {
@@ -83,16 +106,9 @@ const dibujarFila = (canciones) => {
                     <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
                     <button class="btn btn-outline-success">Modificar</button>
                   </td>
-
                 </tr>`;
 };
 ///////////CIERRE CREAR////////////////////////////////
-
-
-
-
-
-
 
 /////////BORRAR CANCIONES/////////////////
 window.borrarCanciones = (Id) => {
@@ -127,7 +143,6 @@ window.borrarCanciones = (Id) => {
 };
 //////////////////CIERRE BORRAR//////////////////////////
 
-
 //////////////Ventana Cancion crear con exito/////////////
 const laCancionfuecreadoventana = () => {
   Swal.fire({
@@ -137,10 +152,6 @@ const laCancionfuecreadoventana = () => {
   });
 };
 //////////////Cierre Cancion Borrar con exito/////////////
-
-
-
-
 
 btnCanciones.addEventListener("click", mostrarModal);
 formularioCanciones.addEventListener("submit", administradorDeCanciones);
