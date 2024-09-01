@@ -50,7 +50,7 @@ const administradorDeCanciones = (e) => {
 
 /////////CREAR////////////////////////////////////
 const crearCanciones = () => {
- Grupo.value=""
+
   estoyCreandoo = true;
   const NuevaCancion = new Canciones(
     Grupo.value,
