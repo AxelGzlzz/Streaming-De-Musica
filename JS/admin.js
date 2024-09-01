@@ -1,6 +1,5 @@
 import Canciones from "./ClassCanciones.js";
-import { validarCantidadCaracteres } from "./validaciones.js";
-import { validarNoSoloEspacios } from "./validaciones.js";
+
 
 
 
@@ -53,30 +52,7 @@ const administradorDeCanciones = (e) => {
 const crearCanciones = () => {
   estoyCreandoo = true;
 
-  const existeCancion = listadoCanciones.some(
-    (cancion) => cancion.Titulo === Titulo.value
-  );
-
-  if (existeCancion) {
-    Swal.fire({
-      title: "Error",
-      text: "La canción ya existe.",
-      icon: "error",
-    });
-    return;
-  }
-
-  if (
-    validarCantidadCaracteres(Grupo, 3, 30) &&
-    validarCantidadCaracteres(Titulo, 3, 30) &&
-    validarCantidadCaracteres(Categoria, 3, 30) &&
-    //validarNumeros(Duracion, 1, 600) &&
-    validarNoSoloEspacios(Grupo) &&
-    validarNoSoloEspacios(Titulo) &&
-    validarNoSoloEspacios(Categoria)
-    //validarURL(Cancion) &&
-    //validarURL(Imagen)
-  ) {
+  
     const NuevaCancion = new Canciones(
       Grupo.value,
       Categoria.value,
@@ -90,7 +66,7 @@ const crearCanciones = () => {
     guardarEnLocalStorage();
     dibujarFila(NuevaCancion);
     laCancionfuecreadoventana();
-  }
+  
 };
 
 
@@ -199,6 +175,41 @@ const laCancionfuecreadoventana = () => {
   });
 };
 //////////////Cierre Cancion Borrar con exito/////////////
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const formularioCanciones = document.getElementById('formularioCanciones');
+
+  formularioCanciones.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+ 
+      // Validar campos
+      if (!Imagen || !Titulo) {
+          alert('Por favor, ingrese la URL de la imagen y el título.');
+          return;
+      }
+
+      // Obtener las imágenes almacenadas
+      const listadoCanciones = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
+      listadoCanciones.push({ Imagen: Imagen, Imagen: Imagen });
+      guardarEnLocalStorage();
+
+      // Cerrar el modal y limpiar el formulario
+      $('#ModalAdminCanciones').modal('hide');
+      formularioCanciones.reset();
+  });
+});
+
+
+
+
+
+
+
+
+
+
 
 btnCanciones.addEventListener("click", mostrarModal);
 formularioCanciones.addEventListener("submit", administradorDeCanciones);
