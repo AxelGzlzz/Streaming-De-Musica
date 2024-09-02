@@ -1,5 +1,5 @@
 import Canciones from "./ClassCanciones.js";
-
+import {validarNoSoloEspacios,validarCantidadCaracteres}  from "./validaciones.js";
 
 
 const btnCanciones = document.getElementById("btnCanciones");
@@ -46,7 +46,30 @@ const administradorDeCanciones = (e) => {
 const crearCanciones = () => {
   estoyCreandoo = true;
 
-  
+  // Verificar si ya existe la canción
+  const existeCancion = listadoCanciones.some(
+    (cancion) => cancion.Titulo === Titulo.value
+  );
+
+  if (existeCancion) {
+    Swal.fire({
+      title: "Error",
+      text: "La canción ya existe.",
+      icon: "error",
+    });
+    return;
+  }
+
+  // Validar los campos
+  if (
+    validarCantidadCaracteres(Grupo, 3, 30) &&
+    validarCantidadCaracteres(Titulo, 3, 30) &&
+    validarCantidadCaracteres(Categoria, 3, 30) &&
+    validarNoSoloEspacios(Grupo) &&
+    validarNoSoloEspacios(Titulo) &&
+    validarNoSoloEspacios(Categoria)
+  ) {
+    // Crear nueva canción si las validaciones son exitosas
     const NuevaCancion = new Canciones(
       Grupo.value,
       Categoria.value,
@@ -55,14 +78,16 @@ const crearCanciones = () => {
       Duracion.value,
       Cancion.value
     );
+    
+    // Agregar nueva canción a la lista y guardar en localStorage
     listadoCanciones.push(NuevaCancion);
     limpiarFormulario();
     guardarEnLocalStorage();
     dibujarFila(NuevaCancion);
-    actualizarPaginaPrincipal(NuevaCancion); // Actualiza la página principal
     laCancionfuecreadoventana();
-  
+  }
 };
+
 
 
 const cargaCancionesInicial = () => {
