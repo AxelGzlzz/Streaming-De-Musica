@@ -94,7 +94,7 @@ const cargaCancionesInicial = () => {
   if (listadoCanciones.length !== 0) {
     listadoCanciones.forEach(cancion => {
       dibujarFila(cancion);
-      actualizarPaginaPrincipal(cancion); // Cargar en la página principal
+      
     });
   }
 };
@@ -116,19 +116,7 @@ const dibujarFila = (canciones) => {
                 </tr>`;
 };
 
-const actualizarPaginaPrincipal = (canciones) => {
-  const losMasEscuchados = document.getElementById("losMasEscuchados");
-  losMasEscuchados.innerHTML += `
-    <div class="col-12 col-md-4 my-3">
-      <img src="${canciones.Imagen}" alt="Portada de ${canciones.Titulo}" class="img-fluid rounded">
-      <h5>${canciones.Titulo}</h5>
-      <p>${canciones.Grupo} - ${canciones.Categoria}</p>
-      <audio controls>
-        <source src="${canciones.Cancion}" type="audio/mpeg">
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
-    </div>`;
-};
+
 
 ///////////CIERRE CREAR////////////////////////////////
 // preparar para Modificar
