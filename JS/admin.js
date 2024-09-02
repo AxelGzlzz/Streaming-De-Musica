@@ -194,27 +194,28 @@ const laCancionfuecreadoventana = () => {
 };
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const formularioCanciones = document.getElementById('formularioCanciones');
 
-  formularioCanciones.addEventListener('submit', function(event) {
+//////////////////Boton Buscar //////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('formularioCanciones').addEventListener('submit', function(event) {
       event.preventDefault();
 
- 
-      // Validar campos
-      if (!Imagen || !Titulo) {
-          alert('Por favor, ingrese la URL de la imagen y el título.');
-          return;
-      }
+       Imagen = document.getElementById('Imagen').value;
+       Titulo = document.getElementById('Titulo').value;
 
-      // Obtener las imágenes almacenadas
-      const listadoCanciones = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
-      listadoCanciones.push({ Imagen: Imagen, Imagen: Imagen });
-      guardarEnLocalStorage();
+      // Obtener datos existentes o inicializar un array vacío
+      const storedData = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
+      
+      // Añadir nuevo elemento
+      storedData.push({ Imagen, Titulo: Titulo });
 
-      // Cerrar el modal y limpiar el formulario
-      $('#ModalAdminCanciones').modal('hide');
-      formularioCanciones.reset();
+      // Guardar en localStorage
+      localStorage.setItem('listadoCancionesKey', JSON.stringify(storedData));
+
+      // Limpiar formulario
+      document.getElementById('formularioCanciones').reset();
+
+      alert('Datos guardados correctamente');
   });
 });
 
