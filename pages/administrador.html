@@ -41,7 +41,7 @@
           <a class="navbar-brand" href="../index.html"
             ><i class="bi bi-youtube text-danger me-2"></i>YOUMUSIC</a
           >
-          <div>
+          <div class="d-none d-md-block">
             <form class="d-flex" role="search">
               <input
                 class="form-control me-2"
@@ -88,10 +88,18 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Ingresar Como administrador
+                  Ingresá
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Inicia Sesión</a></li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalLogin"
+                      >Inicia Sesión</a
+                    >
+                  </li>
                   <li><a class="dropdown-item" href="#">Registrarse</a></li>
                 </ul>
               </li>
@@ -103,11 +111,27 @@
               </li>
             </ul>
           </div>
+          <div class="d-block d-md-none">
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Qué queres escuchar?"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-danger" type="submit">
+                Buscar
+              </button>
+            </form>
+          </div>
         </div>
       </nav>
     </header>
+
     <main class="container py-5">
-      <h1 class="text-center">Administra Tus Canciones</h1>
+      <h1 class="text-center text-success fw-light">
+        Administra Tus Canciones
+      </h1>
       <hr />
       <div class="table-responsive mt-5">
         <table
@@ -120,7 +144,7 @@
               <th>CATEGORIA</th>
               <th>TITULO</th>
               <th>CANCION</th>
-              <th>ACCIONES</th>
+              <th></th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -128,7 +152,7 @@
       </div>
 
       <section class="text-end my-5">
-        <button class="btn btn-outline-light border-5" id="btnCanciones">
+        <button class="btn btn-outline-success" id="btnCanciones">
           <b>AGREGAR CANCION</b>
         </button>
       </section>
@@ -160,7 +184,7 @@
           <div class="modal-body">
             <form id="formularioCanciones">
               <div class="mb-3">
-                <label for="Grupo" class="form-label">Grupo*</label>
+                <label for="Grupo" class="form-label">Grupo/Artista*</label>
                 <input
                   type="text"
                   class="form-control border border-3 border-info-subtle"
@@ -172,7 +196,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="Categoria" class="form-label">Categoria*</label>
+                <label for="Categoria" class="form-label">Género*</label>
                 <input
                   type="text"
                   class="form-control border border-3 border-info-subtle"
@@ -236,7 +260,11 @@
 
               <div class="modal-footer mt-3">
                 <div class="text-end">
-                  <button class="btn btn-info" type="submit" id="btnFormulario">
+                  <button
+                    class="btn btn-outline-success"
+                    type="submit"
+                    id="btnFormulario"
+                  >
                     Agregar
                   </button>
                 </div>

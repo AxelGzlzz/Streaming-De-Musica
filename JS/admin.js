@@ -1,4 +1,8 @@
 import Canciones from "./ClassCanciones.js";
+import { validarCantidadCaracteres } from "./validaciones.js";
+import { validarNumeros } from "./validaciones.js";
+import { validarNoSoloEspacios } from "./validaciones.js";
+import { validarURL } from "./validaciones.js";
 
 const btnCanciones = document.getElementById("btnCanciones");
 const formularioCanciones = document.getElementById("formularioCanciones");
@@ -15,16 +19,14 @@ const Tabla = document.querySelector("tbody");
 const listadoCanciones =
   JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
 let estoyCreandoo = true;
-let ID
-
-
+let ID;
 
 const mostrarModal = () => {
   ModalAdminCanciones.show();
 };
-const ocultarModal=()=>{
-  ModalAdminCanciones.hide()
-}
+const ocultarModal = () => {
+  ModalAdminCanciones.hide();
+};
 const limpiarFormulario = () => {
   formularioCanciones.reset();
 };
@@ -33,104 +35,123 @@ const guardarEnLocalStorage = () => {
   localStorage.setItem("listadoCancionesKey", JSON.stringify(listadoCanciones));
 };
 
-
 const administradorDeCanciones = (e) => {
   e.preventDefault();
   if (estoyCreandoo) {
-
-  
     crearCanciones();
   } else {
-  modificar()
-
+    modificar();
   }
 };
 
-
-
 /////////CREAR////////////////////////////////////
 const crearCanciones = () => {
- Grupo.value=""
   estoyCreandoo = true;
-  const NuevaCancion = new Canciones(
-    Grupo.value,
-    Categoria.value,
-    Titulo.value,
-    Imagen.value,
-    Duracion.value,
-    Cancion.value
+
+  const existeCancion = listadoCanciones.some(
+    (cancion) => cancion.Titulo === Titulo.value
   );
-  listadoCanciones.push(NuevaCancion);
-  limpiarFormulario();
-  guardarEnLocalStorage();
-  dibujarFila(NuevaCancion);
-  laCancionfuecreadoventana();
+
+  if (existeCancion) {
+    Swal.fire({
+      title: "Error",
+      text: "La canción ya existe.",
+      icon: "error",
+    });
+    return;
+  }
+
+  if (
+    validarCantidadCaracteres(Grupo, 3, 30) &&
+    validarCantidadCaracteres(Titulo, 3, 30) &&
+    validarCantidadCaracteres(Categoria, 3, 30) &&
+    validarNumeros(Duracion, 1, 600) &&
+    validarNoSoloEspacios(Grupo) &&
+    validarNoSoloEspacios(Titulo) &&
+    validarNoSoloEspacios(Categoria) &&
+    validarURL(Cancion) &&
+    validarURL(Imagen)
+  ) {
+    const NuevaCancion = new Canciones(
+      Grupo.value,
+      Categoria.value,
+      Titulo.value,
+      Imagen.value,
+      Duracion.value,
+      Cancion.value
+    );
+    listadoCanciones.push(NuevaCancion);
+    limpiarFormulario();
+    guardarEnLocalStorage();
+    dibujarFila(NuevaCancion);
+    actualizarPaginaPrincipal(NuevaCancion); // Actualiza la página principal
+    laCancionfuecreadoventana();
+  }
 };
 
 const cargaCancionesInicial = () => {
   if (listadoCanciones.length !== 0) {
-    listadoCanciones.forEach(cancion => dibujarFila(cancion));
+    listadoCanciones.forEach(cancion => {
+      dibujarFila(cancion);
+      actualizarPaginaPrincipal(cancion); // Cargar en la página principal
+    });
   }
 };
 
-
 const dibujarFila = (canciones) => {
-  const fila = document.createElement("tr");
+  Tabla.innerHTML += `<tr>
+                  <td>${canciones.Id}</td>
+                  <td>${canciones.Grupo}</td>
+                  <td>${canciones.Categoria}</td>
+                  <td>${canciones.Titulo}</td>
+                  <td><audio controls autoplay>
+                    <source src="${canciones.Cancion}" type="audio/mpeg">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio></td>
+                  <td>
+                    <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
+                    <button class="btn btn-outline-success" onclick="preparar('${canciones.Id}')">Modificar</button>
+                  </td>
+                </tr>`;
+};
 
-  fila.innerHTML = `
-    <td>${canciones.Id}</td>
-    <td>${canciones.Grupo}</td>
-    <td>${canciones.Categoria}</td>
-    <td>${canciones.Titulo}</td>
-    <td>
+const actualizarPaginaPrincipal = (canciones) => {
+  const losMasEscuchados = document.getElementById("losMasEscuchados");
+  losMasEscuchados.innerHTML += `
+    <div class="col-12 col-md-4 my-3">
+      <img src="${canciones.Imagen}" alt="Portada de ${canciones.Titulo}" class="img-fluid rounded">
+      <h5>${canciones.Titulo}</h5>
+      <p>${canciones.Grupo} - ${canciones.Categoria}</p>
       <audio controls>
         <source src="${canciones.Cancion}" type="audio/mpeg">
         Tu navegador no soporta la reproducción de audio.
       </audio>
-    </td>
-    <td>
-      <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
-      <button class="btn btn-outline-success" onclick="preparar('${canciones.Id}')">Modificar</button>
-    </td>
-  `;
-
-  fila.addEventListener("click", () => mostrarDetallesCancion(canciones));
-
-  Tabla.appendChild(fila);
+    </div>`;
 };
 
 ///////////CIERRE CREAR////////////////////////////////
-
-
-
 // preparar para Modificar
-window.preparar=(Id)=>{
- estoyCreandoo=false
+window.preparar = (Id) => {
+  estoyCreandoo = false;
+  ID = Id;
+  mostrarModal();
 
- ID=Id
- mostrarModal()
- 
- const buscarMusica=listadoCanciones.find((cancion)=>cancion.Id===Id)
-if(buscarMusica){
-  Grupo.value=buscarMusica.Grupo;
-  Categoria.value=buscarMusica.Categoria;
-  Titulo.value=buscarMusica.Titulo;
-  Imagen.value=buscarMusica.Imagen;
-  Duracion.value=buscarMusica.Duracion;
-  Cancion.value=buscarMusica.Cancion;
- 
-
-}
- 
-}
-
-
+  const buscarMusica = listadoCanciones.find((cancion) => cancion.Id === Id);
+  if (buscarMusica) {
+    Grupo.value = buscarMusica.Grupo;
+    Categoria.value = buscarMusica.Categoria;
+    Titulo.value = buscarMusica.Titulo;
+    Imagen.value = buscarMusica.Imagen;
+    Duracion.value = buscarMusica.Duracion;
+    Cancion.value = buscarMusica.Cancion;
+  }
+};
 
 /////////BORRAR CANCIONES/////////////////
 window.borrarCanciones = (Id) => {
   Swal.fire({
-    title: "¿Seguro que quieres borrar la cancion?",
-    text: "Al borrar no habra ninguna forma de recuperar los datos!!!!!",
+    title: "¿Seguro que quieres borrar la canción?",
+    text: "Al borrar no habrá forma de recuperar los datos.",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#252850",
@@ -144,67 +165,43 @@ window.borrarCanciones = (Id) => {
       );
 
       listadoCanciones.splice(posCanciones, 1);
-
       guardarEnLocalStorage();
-
       Tabla.removeChild(Tabla.children[posCanciones]);
-
       Swal.fire({
-        title: "Eliminaste la cancion Seleccionada!!!",
-        text: "la cancion fue eliminado correctamente.",
+        title: "Eliminaste la canción seleccionada.",
+        text: "La canción fue eliminada correctamente.",
         icon: "success",
       });
     }
   });
 };
+
 //////////////////CIERRE BORRAR//////////////////////////
 
-// modificar
-const modificar=()=>{
-  const editar=listadoCanciones.findIndex((cancion)=>cancion.Id===ID)
-  console.log(editar)
- if(editar!==-1){
-  listadoCanciones[editar].Grupo=Grupo.value;
-  listadoCanciones[editar].Categoria=Categoria.value;
-  listadoCanciones[editar].Titulo=Titulo.value;
-  listadoCanciones[editar].Duracion=Duracion.value;
-  listadoCanciones[editar].Imagen=Imagen.value;
-  listadoCanciones[editar].Cancion=Cancion.value
- 
-  guardarEnLocalStorage()
- location.reload()
-
-  ocultarModal()
- }
-  
-}
+// Modificar canción
+const modificar = () => {
+  const editar = listadoCanciones.findIndex((cancion) => cancion.Id === ID);
+  if (editar !== -1) {
+    listadoCanciones[editar].Grupo = Grupo.value;
+    listadoCanciones[editar].Categoria = Categoria.value;
+    listadoCanciones[editar].Titulo = Titulo.value;
+    listadoCanciones[editar].Duracion = Duracion.value;
+    listadoCanciones[editar].Imagen = Imagen.value;
+    listadoCanciones[editar].Cancion = Cancion.value;
+    guardarEnLocalStorage();
+    location.reload();
+    ocultarModal();
+  }
+};
 
 //////////////Ventana Cancion crear con exito/////////////
 const laCancionfuecreadoventana = () => {
   Swal.fire({
-    title: "La Cancion Fue creada con exito!!",
-    text: "Disfrute su nueva cancionn!",
+    title: "La Canción fue creada con éxito!",
+    text: "Disfruta tu nueva canción.",
     icon: "success",
   });
 };
-//////////////Cierre Cancion Borrar con exito/////////////
-
-
-
-//////////////Mostrar Detalle de Cancion/////////////
-const mostrarDetallesCancion = (cancion) => {
-  document.querySelector(".contenedorPadre .infoCancion p:nth-child(1)").innerHTML = `<strong>Codigo:</strong> ${cancion.Id}`;
-  document.querySelector(".contenedorPadre .infoCancion p:nth-child(2)").innerHTML = `<strong>Titulo:</strong> ${cancion.Titulo}`;
-  document.querySelector(".contenedorPadre .infoCancion p:nth-child(3)").innerHTML = `<strong>Artista:</strong> ${cancion.Grupo}`;
-  document.querySelector(".contenedorPadre .infoCancion p:nth-child(4)").innerHTML = `<strong>Duracion:</strong> ${cancion.Duracion}`;
-  document.querySelector(".contenedorPadre .infoCancion p:nth-child(5)").innerHTML = `<strong>Cancion:</strong> ${cancion.Categoria}`;
-  document.querySelector(".contenedorPadre .logoCancion img").src = cancion.Imagen;
-  document.querySelector(".contenedorPadre .logoCancion a").href = cancion.Cancion;
-};
-
-
-
-
 
 btnCanciones.addEventListener("click", mostrarModal);
 formularioCanciones.addEventListener("submit", administradorDeCanciones);

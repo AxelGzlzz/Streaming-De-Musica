@@ -15,12 +15,13 @@
     <title>STREAMING DE MUSICA</title>
   </head>
   <body>
+    <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="./index.html"
           ><i class="bi bi-youtube text-danger me-2"></i>YOUMUSIC</a
         >
-        <div>
+        <div class="d-none d-md-block">
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Qué queres escuchar?" aria-label="Search">
             <button class="btn btn-outline-danger" type="submit">Buscar</button>
@@ -58,7 +59,7 @@
                 Ingresá
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Inicia Sesión</a></li>
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Inicia Sesión</a></li>
                 <li><a class="dropdown-item" href="#">Registrarse</a></li>
               </ul>
             </li>
@@ -70,14 +71,131 @@
             </li>
           </ul>
         </div>
+        <div class="d-block d-md-none">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Qué queres escuchar?" aria-label="Search">
+            <button class="btn btn-outline-danger" type="submit">Buscar</button>
+          </form>
+        </div>
       </div>
     </nav>
-    <main></main>
+  </header>
+    <main class="container-fluid">
+      <section class="row">
+        <article class="col-md-1">
+          <div id="cajaBotones" class=" text-center justify-content-center mt-3 d-flex justify-content-evenly flex-md-column align-items-md-start align-items-md-center">
+            <div class=""><i class="bi bi-compass nav-item fs-1"></i></div>
+            <div class=""><i class="bi bi-play-btn nav-item fs-1"></i></div>
+            <div class=""><i class="bi bi-file-earmark-music-fill nav-item fs-1"></i></div>
+          </div>
+        </article>
+        <article id="losMasEscuchados" class="container col-md-11">
+          <p class="btn btn-outline-success my-3 my-md-5 mx-md-5">
+            LOS MAS ESCUCHADOS
+          </p>
+          <div id="carouselCanciones" class="carousel slide pe-3">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselCanciones" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselCanciones" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselCanciones" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="./img/img prueba/La plataforma para exhibición de productos en el fondo oscuro con una nota musical colorida _ Foto Premium.jpeg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="./img/img prueba/6a23f46f-49a8-409f-be70-869717560a93.jpeg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="./img/img prueba/kayblack mistérios album.jpeg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselCanciones" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselCanciones" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </article>
+      </section>
+      <section class="container">
+        <article class="ms-2">
+          <p class="btn btn-outline-success my-3 my-md-5 mx-md-5">
+            Albunes para tí
+          </p>
+          <article class="row w-100">
+            <div class="col-6 col-md-4 border rounded-3 border-success mb-3">
+              <img src="./img/artistas y albunes/a84efc6fd808dc1091feb1bc1e4e2a8e.1000x1000x1.jpg" alt="imagen disco abel" class="w-100">
+              <p>Abel Pintos</p>
+            </div>
+            <div class="col-6 col-md-4 border rounded-3 border-success mb-3">
+              <img src="./img/artistas y albunes/artwork-440x440.jpg" alt="portada disco diego torres" class="w-100">
+              <p>Diego Torres</p>
+            </div>
+            <div class="col-6 col-md-4 border rounded-3 border-success mb-3">
+              <img src="./img/artistas y albunes/OIP.jpeg" alt="portada album mp3 emilia mernes" class="w-100">
+              <p>Emilia Mernes</p>
+            </div>
+            <div class="col-6 col-md-4 border rounded-3 border-success mb-3">
+              <img src="./img/artistas y albunes/lali.jpeg" alt="portada lali esposito" class="w-100">
+              <p>Lali Esposito</p>
+            </div>
+            <div class="col-6 col-md-4 border rounded-3 border-success mb-3">
+              <img src="./img/artistas y albunes/khea.jpg" alt="portada album khea" class="w-100">
+              <p>Khea</p>
+            </div>
+            <div class="col-6 col-md-4 border rounded-3 border-success mb-3">
+              <img src="./img/artistas y albunes/Sex-Love-Cover_preview.jpg" alt="portada album tiago pzk" class="w-100">
+              <p>Tiago PZK</p>
+            </div>
+        </article>
+      </section>
+      
+    </main>
     <footer class="bg-body-tertiary">
       <section class="container-fluid">
         <p class="text-center">©Todos los derechos reservados</p>
       </section>
     </footer>
+    <!-- Modal -->
+<div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="w-50 ms-3">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="loginEmail" required />
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="loginPassword" required />
+          </div>
+          <button type="button" class="btn btn-light w-100 mb-2" style="border: 1px solid rgba(0, 0, 0, 0.125)">
+            <img src="./img/google-icon.svg" alt="Google Icon" class="tamañoLogoGyF me-2" />
+            Iniciar con Google
+          </button>
+          <button type="button" class="btn btn-primary w-100 mb-2">
+            <img src="./img/facebook-icon.svg" alt="facebook-icon" class="tamañoLogoGyF me-2" />
+            Iniciar con Facebook
+          </button>
+
+          <a href="#" class="d-block text-center">¿Olvidaste tu contraseña?</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success">Iniciar</button>
+      </div>
+    </div>
+  </div>
+</div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
