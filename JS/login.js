@@ -1,15 +1,11 @@
-/*1- traer los input
-2- validarlos
-3- analizar si coinciden
-4- dar acceso
-*/
+
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('ingresarFormulario');
     const adminLink = document.getElementById('mostrarAdmin');
 
     // Datos de ejemplo para el login
     const validUser = {
-        email: 'Grupo4Music@gmail.com',
+        email: 'grupo4Music@gmail.com',
         contraseña: 'Musica2024'
     };
 
