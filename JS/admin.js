@@ -1,8 +1,7 @@
 import Canciones from "./ClassCanciones.js";
 import { validarCantidadCaracteres } from "./validaciones.js";
-import { validarNumeros } from "./validaciones.js";
 import { validarNoSoloEspacios } from "./validaciones.js";
-import { validarURL } from "./validaciones.js";
+
 
 const btnCanciones = document.getElementById("btnCanciones");
 const formularioCanciones = document.getElementById("formularioCanciones");
@@ -65,12 +64,12 @@ const crearCanciones = () => {
     validarCantidadCaracteres(Grupo, 3, 30) &&
     validarCantidadCaracteres(Titulo, 3, 30) &&
     validarCantidadCaracteres(Categoria, 3, 30) &&
-    validarNumeros(Duracion, 1, 600) &&
+    //validarNumeros(Duracion, 1, 600) &&
     validarNoSoloEspacios(Grupo) &&
     validarNoSoloEspacios(Titulo) &&
-    validarNoSoloEspacios(Categoria) &&
-    validarURL(Cancion) &&
-    validarURL(Imagen)
+    validarNoSoloEspacios(Categoria)
+    //validarURL(Cancion) &&
+    //validarURL(Imagen)
   ) {
     const NuevaCancion = new Canciones(
       Grupo.value,
@@ -88,6 +87,7 @@ const crearCanciones = () => {
     laCancionfuecreadoventana();
   }
 };
+
 
 const cargaCancionesInicial = () => {
   if (listadoCanciones.length !== 0) {
