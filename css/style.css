@@ -1,12 +1,17 @@
+
+
 body {
+    background-image: url(../img/pagina-error-404-distorsion_52683-3853.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #f0f0f0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-main {
-  flex-grow: 1;
-}
+
 
 .logoCancion img{
     width: 35%;
@@ -16,6 +21,11 @@ main {
   .padreInfo{
     display: flex;
     flex-direction: column;
+
+    min-height: 100vh;
+}
+
+
     justify-content: center ;
     align-items: center;
   }
@@ -26,6 +36,7 @@ main {
   }
   
 }
+
     
     main{
     
@@ -33,7 +44,11 @@ main {
     
     }
 
+    
+
+
     .tamañoLogoGyF {
         max-width: 20px;
         max-height: 20px;
       }
+
