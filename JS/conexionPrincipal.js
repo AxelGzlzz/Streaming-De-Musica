@@ -1,6 +1,4 @@
-import Canciones from "./ClassCanciones.js";
-const Titulo = document.getElementById("Titulo");
-const Imagen = document.getElementById("Imagen");
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const Galeria = document.getElementById('Galeria');
