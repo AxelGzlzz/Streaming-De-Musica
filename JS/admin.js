@@ -1,5 +1,5 @@
 import Canciones from "./ClassCanciones.js";
-import  {validarCantidadCaracteres,validarNoSoloEspacios} from "./validaciones.js";
+import  {validarCantidadCaracteres} from "./validaciones.js";
 
 
 
@@ -64,11 +64,9 @@ const crearCanciones = () => {
   // Validar los campos
   if (
     validarCantidadCaracteres(Grupo, 3, 30) &&
-    validarCantidadCaracteres(Titulo, 3, 30) &&
     validarCantidadCaracteres(Categoria, 3, 30) &&
-    validarNoSoloEspacios(Grupo) &&
-    validarNoSoloEspacios(Titulo) &&
-    validarNoSoloEspacios(Categoria)
+    validarCantidadCaracteres(Titulo, 3, 30)
+    
   ) {
     // Crear nueva canción si las validaciones son exitosas
     const NuevaCancion = new Canciones(
