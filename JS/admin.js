@@ -1,4 +1,5 @@
 import Canciones from "./ClassCanciones.js";
+import  {validarCantidadCaracteres} from "./validaciones.js";
 
 
 
@@ -45,7 +46,28 @@ const administradorDeCanciones = (e) => {
 /////////CREAR////////////////////////////////////
 const crearCanciones = () => {
   estoyCreandoo = true;
- 
+
+  // Verificar si ya existe la canción
+  const existeCancion = listadoCanciones.some(
+    (cancion) => cancion.Titulo === Titulo.value
+  );
+
+  if (existeCancion) {
+    Swal.fire({
+      title: "Error",
+      text: "La canción ya existe.",
+      icon: "error",
+    });
+    return;
+  }
+
+  // Validar los campos
+  if (
+    validarCantidadCaracteres(Grupo, 3, 30) &&
+    validarCantidadCaracteres(Categoria, 3, 30) &&
+    validarCantidadCaracteres(Titulo, 3, 30)
+    
+  ) {
     // Crear nueva canción si las validaciones son exitosas
     const NuevaCancion = new Canciones(
       Grupo.value,
@@ -62,7 +84,7 @@ const crearCanciones = () => {
     guardarEnLocalStorage();
     dibujarFila(NuevaCancion);
     laCancionfuecreadoventana();
-  
+  }
 };
 
 
@@ -71,7 +93,7 @@ const cargaCancionesInicial = () => {
   if (listadoCanciones.length !== 0) {
     listadoCanciones.forEach(cancion => {
       dibujarFila(cancion);
-      actualizarPaginaPrincipal(cancion); // Cargar en la página principal
+      
     });
   }
 };
@@ -93,19 +115,7 @@ const dibujarFila = (canciones) => {
                 </tr>`;
 };
 
-const actualizarPaginaPrincipal = (canciones) => {
-  const losMasEscuchados = document.getElementById("losMasEscuchados");
-  losMasEscuchados.innerHTML += `
-    <div class="col-12 col-md-4 my-3">
-      <img src="${canciones.Imagen}" alt="Portada de ${canciones.Titulo}" class="img-fluid rounded">
-      <h5>${canciones.Titulo}</h5>
-      <p>${canciones.Grupo} - ${canciones.Categoria}</p>
-      <audio controls>
-        <source src="${canciones.Cancion}" type="audio/mpeg">
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
-    </div>`;
-};
+
 
 ///////////CIERRE CREAR////////////////////////////////
 // preparar para Modificar
@@ -182,27 +192,28 @@ const laCancionfuecreadoventana = () => {
 };
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const formularioCanciones = document.getElementById('formularioCanciones');
 
-  formularioCanciones.addEventListener('submit', function(event) {
+//////////////////Boton Buscar //////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('formularioCanciones').addEventListener('submit', function(event) {
       event.preventDefault();
 
- 
-      // Validar campos
-      if (!Imagen || !Titulo) {
-          alert('Por favor, ingrese la URL de la imagen y el título.');
-          return;
-      }
+       Imagen = document.getElementById('Imagen').value;
+       Titulo = document.getElementById('Titulo').value;
 
-      // Obtener las imágenes almacenadas
-      const listadoCanciones = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
-      listadoCanciones.push({ Imagen: Imagen, Imagen: Imagen });
-      guardarEnLocalStorage();
+      // Obtener datos existentes o inicializar un array vacío
+      const storedData = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
+      
+      // Añadir nuevo elemento
+      storedData.push({ Imagen, Titulo: Titulo });
 
-      // Cerrar el modal y limpiar el formulario
-      $('#ModalAdminCanciones').modal('hide');
-      formularioCanciones.reset();
+      // Guardar en localStorage
+      localStorage.setItem('listadoCancionesKey', JSON.stringify(storedData));
+
+      // Limpiar formulario
+      document.getElementById('formularioCanciones').reset();
+
+      alert('Datos guardados correctamente');
   });
 });
 
