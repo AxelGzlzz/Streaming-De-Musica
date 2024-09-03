@@ -62,7 +62,7 @@ const crearCanciones = () => {
   // Validar los campos
   if (
     validarCantidadCaracteres(Grupo, 3, 30) &&
-    validarCantidadCaracteres(Categoria, 3, 30) &&
+    validarCantidadCaracteres(Categoria, 3, 30)&&
     validarCantidadCaracteres(Titulo, 3, 30)
     
   ) {
