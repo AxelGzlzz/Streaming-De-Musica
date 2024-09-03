@@ -1,7 +1,5 @@
 import Canciones from "./ClassCanciones.js";
-import  {validarCantidadCaracteres} from "./validaciones.js";
-
-
+import { validarCantidadCaracteres } from "./validaciones.js";
 
 const btnCanciones = document.getElementById("btnCanciones");
 const formularioCanciones = document.getElementById("formularioCanciones");
@@ -28,6 +26,9 @@ const ocultarModal = () => {
 };
 const limpiarFormulario = () => {
   formularioCanciones.reset();
+  Grupo.classList.remove("is-valid");
+  Categoria.classList.remove("is-valid");
+  Titulo.classList.remove("is-valid");
 };
 
 const guardarEnLocalStorage = () => {
@@ -66,7 +67,6 @@ const crearCanciones = () => {
     validarCantidadCaracteres(Grupo, 3, 30) &&
     validarCantidadCaracteres(Categoria, 3, 30) &&
     validarCantidadCaracteres(Titulo, 3, 30)
-    
   ) {
     // Crear nueva canción si las validaciones son exitosas
     const NuevaCancion = new Canciones(
@@ -77,7 +77,7 @@ const crearCanciones = () => {
       Duracion.value,
       Cancion.value
     );
-    
+
     // Agregar nueva canción a la lista y guardar en localStorage
     listadoCanciones.push(NuevaCancion);
     limpiarFormulario();
@@ -87,13 +87,10 @@ const crearCanciones = () => {
   }
 };
 
-
-
 const cargaCancionesInicial = () => {
   if (listadoCanciones.length !== 0) {
-    listadoCanciones.forEach(cancion => {
+    listadoCanciones.forEach((cancion) => {
       dibujarFila(cancion);
-      
     });
   }
 };
@@ -114,8 +111,6 @@ const dibujarFila = (canciones) => {
                   </td>
                 </tr>`;
 };
-
-
 
 ///////////CIERRE CREAR////////////////////////////////
 // preparar para Modificar
@@ -191,41 +186,32 @@ const laCancionfuecreadoventana = () => {
   });
 };
 
-
-
 //////////////////Boton Buscar //////////////////////
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('formularioCanciones').addEventListener('submit', function(event) {
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("formularioCanciones")
+    .addEventListener("submit", function (event) {
       event.preventDefault();
 
-       Imagen = document.getElementById('Imagen').value;
-       Titulo = document.getElementById('Titulo').value;
+      Imagen = document.getElementById("Imagen").value;
+      Titulo = document.getElementById("Titulo").value;
 
       // Obtener datos existentes o inicializar un array vacío
-      const storedData = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
-      
+      const storedData =
+        JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
+
       // Añadir nuevo elemento
       storedData.push({ Imagen, Titulo: Titulo });
 
       // Guardar en localStorage
-      localStorage.setItem('listadoCancionesKey', JSON.stringify(storedData));
+      localStorage.setItem("listadoCancionesKey", JSON.stringify(storedData));
 
       // Limpiar formulario
-      document.getElementById('formularioCanciones').reset();
+      document.getElementById("formularioCanciones").reset();
 
-      alert('Datos guardados correctamente');
-  });
+      alert("Datos guardados correctamente");
+    });
 });
-
-
-
-
-
-
-
-
-
-
 
 btnCanciones.addEventListener("click", mostrarModal);
 formularioCanciones.addEventListener("submit", administradorDeCanciones);
