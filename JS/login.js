@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const contraseña = document.getElementById('loginPassword').value;
 
         if (email === validUser.email && contraseña === validUser.contraseña) {
-            // Guardar el estado de la sesión en localStorage
+     
             localStorage.setItem('isAuthenticated', 'true');
             adminLink.style.display = 'block';
             loginDropdown.style.display = 'none';
@@ -28,19 +28,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Verificar si ya está autenticado al cargar la página
+  
     if (localStorage.getItem('isAuthenticated') === 'true') {
         adminLink.style.display = 'block';
         loginDropdown.style.display = 'none';
         logoutItem.style.display = 'block';
     }
 
-    // Manejar el clic en el botón de logout
     document.getElementById('logoutButton').addEventListener('click', function() {
         localStorage.removeItem('isAuthenticated');
         adminLink.style.display = 'none';
         loginDropdown.style.display = 'block';
         logoutItem.style.display = 'none';
-        window.location.href = './index.html';  // Redirigir al inicio
+        window.location.href = './index.html';  
     });
 });

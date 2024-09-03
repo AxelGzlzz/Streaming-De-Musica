@@ -1,32 +1,32 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    const gallery = document.getElementById('gallery');
-    const adminForm = document.getElementById('formularioCanciones');
-    const searchInput = document.getElementById('inputBuscar');
-    const detailTitle = document.getElementById('detail-title');
-    const detailImage = document.getElementById('detail-image');
-    const detailGroup = document.getElementById('detail-group');
-    const detailGenre = document.getElementById('detail-genre');
-    const detailDuration = document.getElementById('detail-duration');
-    const detailSong = document.getElementById('detail-song');
+    const Galeria = document.getElementById('carddefotos');
+    const formularioCanciones = document.getElementById('formularioCanciones');
+    const Buscar = document.getElementById('inputBuscar');
+    const detalleTitulo = document.getElementById('detail-title');
+    const detalleImagen = document.getElementById('detail-image');
+    const detalleGrupo = document.getElementById('detail-group');
+    const detalleGenero = document.getElementById('detail-genre');
+    const detalleDuracion = document.getElementById('detail-duration');
+    const detalleCancion = document.getElementById('detail-song');
 
     let items = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
 
     function renderGallery() {
-        gallery.innerHTML = '';
+        Galeria.innerHTML = '';
         items.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = 'col-md-4';
             card.innerHTML = `
-                <div class="card">
+                <div class="card mb-4">
                     <img src="${item.Imagen}" class="card-img-top" alt="${item.Titulo}">
                     <div class="card-body">
                         <h5 class="card-title">${item.Titulo}</h5>
-                        <a href="../html/detalle.html?id=${index}" class="btn btn-primary">Ver Detalles</a>
+                        <a href="../pages/detalle.html?id=${index}" class="btn btn-primary">Ver Detalles</a>
                     </div>
                 </div>
             `;
-            gallery.appendChild(card);
+            Galeria.appendChild(card);
         });
     }
 
@@ -35,44 +35,44 @@ document.addEventListener("DOMContentLoaded", () => {
         const id = urlParams.get('id');
         if (id !== null) {
             const item = items[id];
-            detailTitle.textContent = item.Titulo;
-            detailImage.src = item.imageUrl;
-            detailGroup.textContent = `Grupo: ${item.Grupo}`;
-            detailGenre.textContent = `Género: ${item.Genero}`;
-            detailDuration.textContent = `Duración: ${item.Duracion}`;
-            detailSong.href = item.Cancion;
-            detailSong.textContent = 'Escuchar Canción';
+            detalleTitulo.textContent = item.Titulo;
+            detalleImagen.src = item.Imagen   ;
+            detalleGrupo.textContent = `Grupo: ${item.Grupo}`;
+            detalleGenero.textContent = `Categoria: ${item.Categoria}`;
+            detalleDuracion.textContent = `Duración: ${item.Duracion}`;
+            detalleCancion.href = item.Cancion;
+            detalleCancion.textContent = 'Escuchar Canción';
         }
     }
 
-    if (adminForm) {
-        adminForm.addEventListener('submit', (event) => {
+    if (formularioCanciones) {
+        formularioCanciones.addEventListener('submit', (event) => {
             event.preventDefault();
-            const group = document.getElementById('Grupo').value;
-            const genre = document.getElementById('Categoria').value;
-            const title = document.getElementById('Titulo').value;
-            const imageUrl = document.getElementById('Imagen').value;
-            const duration = document.getElementById('Duracion').value;
-            const songUrl = document.getElementById('Cancion').value;
-            items.push({ group, genre, title, imageUrl, duration, songUrl });
+            const Grupo = document.getElementById('Grupo').value;
+            const Genero = document.getElementById('Categoria').value;
+            const Titulo = document.getElementById('Titulo').value;
+            const Imagen = document.getElementById('Imagen').value;
+            const Duracion = document.getElementById('Duracion').value;
+            const Cancion = document.getElementById('Cancion').value;
+            items.push({ Grupo, Genero, Titulo, Imagen, Duracion, Cancion });
             localStorage.setItem('listadoCancionesKey', JSON.stringify(items));
-            adminForm.reset();
-            renderGallery(); // Actualizar la galería en la página de administración
+            formularioCanciones.reset();
+            renderGallery(); 
         });
     }
 
-    if (gallery) {
+    if (Galeria) {
         renderGallery();
     }
 
-    if (detailTitle) {
+    if (detalleTitulo) {
         loadDetail();
     }
 
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            Array.from(gallery.children).forEach((card) => {
+    if (Buscar) {
+        Buscar.addEventListener('input', () => {
+            const query = Buscar.value.toLowerCase();
+            Array.from(Galeria.children).forEach((card) => {
                 const title = card.querySelector('.card-title').textContent.toLowerCase();
                 if (title.includes(query)) {
                     card.style.display = '';

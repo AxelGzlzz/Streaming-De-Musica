@@ -44,3 +44,14 @@ margin-left: 80px ;
     height: 500px;
   }
 }
+
+/* styles.css */
+
+#gallery .card {
+  margin-bottom: 20px;
+}
+
+.card img {
+  height: 200px;
+  object-fit: cover;
+}

@@ -44,11 +44,11 @@ const administradorDeCanciones = (e) => {
   }
 };
 
-/////////CREAR////////////////////////////////////
+
 const crearCanciones = () => {
   estoyCreandoo = true;
 
-  // Verificar si ya existe la canción
+  
   const existeCancion = listadoCanciones.some(
     (cancion) => cancion.Titulo === Titulo.value
   );
@@ -62,13 +62,13 @@ const crearCanciones = () => {
     return;
   }
 
-  // Validar los campos
+  
   if (
     validarCantidadCaracteres(Grupo, 3, 30) &&
     validarCantidadCaracteres(Categoria, 3, 30) &&
     validarCantidadCaracteres(Titulo, 3, 30)
   ) {
-    // Crear nueva canción si las validaciones son exitosas
+    
     const NuevaCancion = new Canciones(
       Grupo.value,
       Categoria.value,
@@ -78,7 +78,7 @@ const crearCanciones = () => {
       Cancion.value
     );
 
-    // Agregar nueva canción a la lista y guardar en localStorage
+   
     listadoCanciones.push(NuevaCancion);
     limpiarFormulario();
     guardarEnLocalStorage();
@@ -112,8 +112,7 @@ const dibujarFila = (canciones) => {
                 </tr>`;
 };
 
-///////////CIERRE CREAR////////////////////////////////
-// preparar para Modificar
+
 window.preparar = (Id) => {
   estoyCreandoo = false;
   ID = Id;
@@ -130,7 +129,7 @@ window.preparar = (Id) => {
   }
 };
 
-/////////BORRAR CANCIONES/////////////////
+
 window.borrarCanciones = (Id) => {
   Swal.fire({
     title: "¿Seguro que quieres borrar la canción?",
@@ -159,9 +158,7 @@ window.borrarCanciones = (Id) => {
   });
 };
 
-//////////////////CIERRE BORRAR//////////////////////////
 
-// Modificar canción
 const modificar = () => {
   const editar = listadoCanciones.findIndex((cancion) => cancion.Id === ID);
   if (editar !== -1) {
@@ -177,7 +174,7 @@ const modificar = () => {
   }
 };
 
-//////////////Ventana Cancion crear con exito/////////////
+
 const laCancionfuecreadoventana = () => {
   Swal.fire({
     title: "La Canción fue creada con éxito!",
