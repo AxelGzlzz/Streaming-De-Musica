@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const resultContainer = document.getElementById('result');
+    const resultContainer = document.getElementById('Galeria');
 
     function displayItems(items) {
         resultContainer.innerHTML = ''; // Limpiar resultados anteriores
