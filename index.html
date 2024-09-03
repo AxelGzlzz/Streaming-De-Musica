@@ -79,8 +79,9 @@
                   >Administrador</a
                 >
               </li>
-              
-              <li class="nav-item dropdown">
+
+              <li class="nav-item dropdown" id="loginDropdown">
+
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -102,6 +103,12 @@
                   </li>
                   <li><a class="dropdown-item" href="#">Registrarse</a></li>
                 </ul>
+              </li>
+
+              <li class="nav-item" id="logoutItem" style="display: none">
+                <button id="logoutButton" class="btn btn-outline-danger">
+                  Cerrar Sesión
+                </button>
               </li>
               <li class="nav-item">
                 <a
@@ -230,7 +237,11 @@
 
       <div class="container mt-5">
         <h1 class="mb-4">Canciones Para Ti:</h1>
-        <div id="result" class="row">
+        <div id="Galeria" class="row">
+          <!-- Las tarjetas se insertarán aquí por JavaScript -->
+        </div>
+        <div id="detalleCancion" class="container mt-5" style="display: none">
+          <!-- Los detalles de la canción se insertarán aquí dinámicamente -
           <!-- Las imágenes y títulos se insertarán aquí por JavaScript -->
         </div>
       </div>
