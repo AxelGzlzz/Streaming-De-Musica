@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutItem = document.getElementById('logoutItem');
 
     const validUser = {
-        email: 'Grupo4Music@gmail.com',
+        email: 'grupo4Music@gmail.com',
         contraseña: 'Musica2024'
     };
 

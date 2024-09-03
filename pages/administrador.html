@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="../css/administrador.css" />
     <title>STREAMING DE MUSICA</title>
   </head>
-  <body id="bgpaginaAdministrador">
+  <body id="bgpaginaAdministrador" >
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
@@ -43,15 +43,19 @@
           >
           <div class="d-none d-md-block">
             <form class="d-flex" role="search">
-              <input
+              <div class="mt-2">
+                <input
                 class="form-control me-2"
                 type="search"
                 placeholder="Qué queres escuchar?"
                 aria-label="Search"
               />
-              <button class="btn btn-outline-danger" type="submit">
-                Buscar
-              </button>
+              </div>
+              <div class="mt-2 ms-3">
+                <button class="btn btn-outline-danger" type="submit">
+                  Buscar
+                </button>
+              </div>
             </form>
           </div>
           <button
@@ -68,15 +72,11 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="../index.html"
-                  ><i class="bi bi-house text-danger"></i
-                ></a>
-              </li>
-              <li>
                 <a
-                  class="nav-link active"
-                  aria-current="page"
+                  class="nav-link"
                   href="/pages/administrador.html"
+                  id="mostrarAdmin"
+                  style="display: none"
                   >Administrador</a
                 >
               </li>
@@ -100,7 +100,7 @@
                       >Inicia Sesión</a
                     >
                   </li>
-                  <li><a class="dropdown-item" href="#">Registrarse</a></li>
+                  <li><a class="dropdown-item" href="./pages/error404.html">Registrarse</a></li>
                 </ul>
               </li>
 
@@ -111,6 +111,22 @@
               </li>
 
               <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="../pages/nosotros.html"
+                  >Nosotros</i
+                ></a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="./index.html"
+                  ><i class="bi bi-house text-danger"></i
+                ></a>
+              </li>
+              <li class="nav-item">
                 <i class="bi bi-gear-fill text-danger nav-link"></i>
               </li>
               <li class="nav-item">
@@ -118,7 +134,7 @@
               </li>
             </ul>
           </div>
-          <div class="d-block d-md-none">
+          <div class="d-block d-md-none mt-2">
             <form class="d-flex" role="search">
               <input
                 class="form-control me-2"
@@ -126,7 +142,7 @@
                 placeholder="Qué queres escuchar?"
                 aria-label="Search"
               />
-              <button class="btn btn-outline-danger" type="submit">
+              <button class="btn btn-outline-danger ms-10" type="submit">
                 Buscar
               </button>
             </form>
@@ -195,11 +211,10 @@
                   type="text"
                   class="form-control border border-3 border-info-subtle"
                   id="Grupo"
-                  minlength="1"
-                  maxlength="100"
                   placeholder="Las Pastillas del Abuelo"
                   required
                 />
+                <div class="invalid-feedback">Escribe el nombre completo, debe contener mas de 3 carácteres</div>
               </div>
               <div class="mb-3">
                 <label for="Categoria" class="form-label">Género*</label>
@@ -207,11 +222,10 @@
                   type="text"
                   class="form-control border border-3 border-info-subtle"
                   id="Categoria"
-                  minlength="1"
-                  maxlength="100"
                   placeholder="Rock"
                   required
                 />
+                <div class="invalid-feedback">Escribe un género completo, debe contener mas de 3 carácteres </div>
               </div>
               <div class="mb-3">
                 <label for="Titulo" class="form-label">Titulo*</label>
@@ -219,11 +233,10 @@
                   type="text"
                   class="form-control border border-3 border-info-subtle"
                   id="Titulo"
-                  minlength="1"
-                  maxlength="100"
                   placeholder="¿Que es Dios?"
                   required
                 />
+                <div class="invalid-feedback">Escribe el nombre completo, debe contener mas de 3 carácteres</div>
               </div>
               <div class="mb-3">
                 <label for="Imagen" class="form-label">Imagen( Url )*</label>
@@ -281,7 +294,7 @@
       </div>
     </div>
 
-    <footer class="bg-body-tertiary">
+    <footer class="bg-body-tertiary ">
       <section class="container-fluid">
         <p class="text-center">©Todos los derechos reservados</p>
       </section>

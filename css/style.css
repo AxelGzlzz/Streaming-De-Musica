@@ -13,21 +13,34 @@ main {
   width: 35%;
 }
 
+.tamañoLogoGyF {
+  max-width: 20px;
+  max-height: 20px;
+}
+
+.ms-10{
+margin-left: 80px ;
+}
+
 @media all and (max-width: 767px) {
   .padreInfo {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    min-height: 100vh;
   }
-
-  .infoCancion {
-    width: 95%;
-    margin-top: 20px;
+  
+  main {
+    flex-grow: 1;
   }
 }
 
 .card-img-top {
   height: 200px;
   object-fit: cover;
+}
+
+@media all and (min-width: 992px) {
+  .bannerscarousel {
+    height: 500px;
+  }
 }

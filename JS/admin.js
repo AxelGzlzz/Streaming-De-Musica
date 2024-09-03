@@ -1,176 +1,192 @@
-  import Canciones from "./ClassCanciones.js";
+import Canciones from "./ClassCanciones.js";
+import { validarCantidadCaracteres } from "./validaciones.js";
 
+const btnCanciones = document.getElementById("btnCanciones");
+const formularioCanciones = document.getElementById("formularioCanciones");
+const ModalAdminCanciones = new bootstrap.Modal(
+  document.getElementById("ModalAdminCanciones")
+);
+const Grupo = document.getElementById("Grupo");
+const Categoria = document.getElementById("Categoria");
+const Titulo = document.getElementById("Titulo");
+const Imagen = document.getElementById("Imagen");
+const Duracion = document.getElementById("Duracion");
+const Cancion = document.getElementById("Cancion");
+const Tabla = document.querySelector("tbody");
+const listadoCanciones =
+  JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
+let estoyCreandoo = true;
+let ID;
 
+const mostrarModal = () => {
+  ModalAdminCanciones.show();
+};
+const ocultarModal = () => {
+  ModalAdminCanciones.hide();
+};
+const limpiarFormulario = () => {
+  formularioCanciones.reset();
+  Grupo.classList.remove("is-valid");
+  Categoria.classList.remove("is-valid");
+  Titulo.classList.remove("is-valid");
+};
 
-  const btnCanciones = document.getElementById("btnCanciones");
-  const formularioCanciones = document.getElementById("formularioCanciones");
-  const ModalAdminCanciones = new bootstrap.Modal(
-    document.getElementById("ModalAdminCanciones")
+const guardarEnLocalStorage = () => {
+  localStorage.setItem("listadoCancionesKey", JSON.stringify(listadoCanciones));
+};
+
+const administradorDeCanciones = (e) => {
+  e.preventDefault();
+  if (estoyCreandoo) {
+    crearCanciones();
+  } else {
+    modificar();
+  }
+};
+
+/////////CREAR////////////////////////////////////
+const crearCanciones = () => {
+  estoyCreandoo = true;
+
+  // Verificar si ya existe la canción
+  const existeCancion = listadoCanciones.some(
+    (cancion) => cancion.Titulo === Titulo.value
   );
-  const Grupo = document.getElementById("Grupo");
-  const Categoria = document.getElementById("Categoria");
-  const Titulo = document.getElementById("Titulo");
-  const Imagen = document.getElementById("Imagen");
-  const Duracion = document.getElementById("Duracion");
-  const Cancion = document.getElementById("Cancion");
-  const Tabla = document.querySelector("tbody");
-  const listadoCanciones =
-    JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
-  let estoyCreandoo = true;
-  let ID;
 
-  const mostrarModal = () => {
-    ModalAdminCanciones.show();
-  };
-  const ocultarModal = () => {
-    ModalAdminCanciones.hide();
-  };
-  const limpiarFormulario = () => {
-    formularioCanciones.reset();
-  };
+  if (existeCancion) {
+    Swal.fire({
+      title: "Error",
+      text: "La canción ya existe.",
+      icon: "error",
+    });
+    return;
+  }
 
-  const guardarEnLocalStorage = () => {
-    localStorage.setItem("listadoCancionesKey", JSON.stringify(listadoCanciones));
-  };
+  // Validar los campos
+  if (
+    validarCantidadCaracteres(Grupo, 3, 30) &&
+    validarCantidadCaracteres(Categoria, 3, 30) &&
+    validarCantidadCaracteres(Titulo, 3, 30)
+  ) {
+    // Crear nueva canción si las validaciones son exitosas
+    const NuevaCancion = new Canciones(
+      Grupo.value,
+      Categoria.value,
+      Titulo.value,
+      Imagen.value,
+      Duracion.value,
+      Cancion.value
+    );
 
-  const administradorDeCanciones = (e) => {
-    e.preventDefault();
-    if (estoyCreandoo) {
-      crearCanciones();
-    } else {
-      modificar();
-    }
-  };
+    // Agregar nueva canción a la lista y guardar en localStorage
+    listadoCanciones.push(NuevaCancion);
+    limpiarFormulario();
+    guardarEnLocalStorage();
+    dibujarFila(NuevaCancion);
+    laCancionfuecreadoventana();
+  }
+};
 
-  /////////CREAR////////////////////////////////////
-  const crearCanciones = () => {
-    estoyCreandoo = true;
-  
-      // Crear nueva canción si las validaciones son exitosas
-      const NuevaCancion = new Canciones(
-        Grupo.value,
-        Categoria.value,
-        Titulo.value,
-        Imagen.value,
-        Duracion.value,
-        Cancion.value
+const cargaCancionesInicial = () => {
+  if (listadoCanciones.length !== 0) {
+    listadoCanciones.forEach((cancion) => {
+      dibujarFila(cancion);
+    });
+  }
+};
+
+const dibujarFila = (canciones) => {
+  Tabla.innerHTML += `<tr>
+                  <td>${canciones.Id}</td>
+                  <td>${canciones.Grupo}</td>
+                  <td>${canciones.Categoria}</td>
+                  <td>${canciones.Titulo}</td>
+                  <td><audio controls autoplay>
+                    <source src="${canciones.Cancion}" type="audio/mpeg">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio></td>
+                  <td>
+                    <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
+                    <button class="btn btn-outline-success" onclick="preparar('${canciones.Id}')">Modificar</button>
+                  </td>
+                </tr>`;
+};
+
+///////////CIERRE CREAR////////////////////////////////
+// preparar para Modificar
+window.preparar = (Id) => {
+  estoyCreandoo = false;
+  ID = Id;
+  mostrarModal();
+
+  const buscarMusica = listadoCanciones.find((cancion) => cancion.Id === Id);
+  if (buscarMusica) {
+    Grupo.value = buscarMusica.Grupo;
+    Categoria.value = buscarMusica.Categoria;
+    Titulo.value = buscarMusica.Titulo;
+    Imagen.value = buscarMusica.Imagen;
+    Duracion.value = buscarMusica.Duracion;
+    Cancion.value = buscarMusica.Cancion;
+  }
+};
+
+/////////BORRAR CANCIONES/////////////////
+window.borrarCanciones = (Id) => {
+  Swal.fire({
+    title: "¿Seguro que quieres borrar la canción?",
+    text: "Al borrar no habrá forma de recuperar los datos.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#252850",
+    cancelButtonColor: "#8B0000",
+    confirmButtonText: "Borrar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const posCanciones = listadoCanciones.findIndex(
+        (canciones) => canciones.Id === Id
       );
-      
-      // Agregar nueva canción a la lista y guardar en localStorage
-      listadoCanciones.push(NuevaCancion);
-      limpiarFormulario();
+
+      listadoCanciones.splice(posCanciones, 1);
       guardarEnLocalStorage();
-      dibujarFila(NuevaCancion);
-      laCancionfuecreadoventana();
-    
-  };
-
-
-
-  const cargaCancionesInicial = () => {
-    if (listadoCanciones.length !== 0) {
-      listadoCanciones.forEach(cancion => {
-        dibujarFila(cancion);
-       
+      Tabla.removeChild(Tabla.children[posCanciones]);
+      Swal.fire({
+        title: "Eliminaste la canción seleccionada.",
+        text: "La canción fue eliminada correctamente.",
+        icon: "success",
       });
     }
-  };
+  });
+};
 
-  const dibujarFila = (canciones) => {
-    Tabla.innerHTML += `<tr>
-                    <td>${canciones.Id}</td>
-                    <td>${canciones.Grupo}</td>
-                    <td>${canciones.Categoria}</td>
-                    <td>${canciones.Titulo}</td>
-                    <td><audio controls autoplay>
-                      <source src="${canciones.Cancion}" type="audio/mpeg">
-                      Tu navegador no soporta la reproducción de audio.
-                  </audio></td>
-                    <td>
-                      <button class="btn btn-outline-danger mb-2 mb-md-0" onclick="borrarCanciones('${canciones.Id}')">Eliminar</button>
-                      <button class="btn btn-outline-success" onclick="preparar('${canciones.Id}')">Modificar</button>
-                    </td>
-                  </tr>`;
-  };
+//////////////////CIERRE BORRAR//////////////////////////
 
-  
+// Modificar canción
+const modificar = () => {
+  const editar = listadoCanciones.findIndex((cancion) => cancion.Id === ID);
+  if (editar !== -1) {
+    listadoCanciones[editar].Grupo = Grupo.value;
+    listadoCanciones[editar].Categoria = Categoria.value;
+    listadoCanciones[editar].Titulo = Titulo.value;
+    listadoCanciones[editar].Duracion = Duracion.value;
+    listadoCanciones[editar].Imagen = Imagen.value;
+    listadoCanciones[editar].Cancion = Cancion.value;
+    guardarEnLocalStorage();
+    location.reload();
+    ocultarModal();
+  }
+};
 
-  ///////////CIERRE CREAR////////////////////////////////
-  // preparar para Modificar
-  window.preparar = (Id) => {
-    estoyCreandoo = false;
-    ID = Id;
-    mostrarModal();
+//////////////Ventana Cancion crear con exito/////////////
+const laCancionfuecreadoventana = () => {
+  Swal.fire({
+    title: "La Canción fue creada con éxito!",
+    text: "Disfruta tu nueva canción.",
+    icon: "success",
+  });
+};
 
-    const buscarMusica = listadoCanciones.find((cancion) => cancion.Id === Id);
-    if (buscarMusica) {
-      Grupo.value = buscarMusica.Grupo;
-      Categoria.value = buscarMusica.Categoria;
-      Titulo.value = buscarMusica.Titulo;
-      Imagen.value = buscarMusica.Imagen;
-      Duracion.value = buscarMusica.Duracion;
-      Cancion.value = buscarMusica.Cancion;
-    }
-  };
-
-  /////////BORRAR CANCIONES/////////////////
-  window.borrarCanciones = (Id) => {
-    Swal.fire({
-      title: "¿Seguro que quieres borrar la canción?",
-      text: "Al borrar no habrá forma de recuperar los datos.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#252850",
-      cancelButtonColor: "#8B0000",
-      confirmButtonText: "Borrar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const posCanciones = listadoCanciones.findIndex(
-          (canciones) => canciones.Id === Id
-        );
-
-        listadoCanciones.splice(posCanciones, 1);
-        guardarEnLocalStorage();
-        Tabla.removeChild(Tabla.children[posCanciones]);
-        Swal.fire({
-          title: "Eliminaste la canción seleccionada.",
-          text: "La canción fue eliminada correctamente.",
-          icon: "success",
-        });
-      }
-    });
-  };
-
-  //////////////////CIERRE BORRAR//////////////////////////
-
-  // Modificar canción
-  const modificar = () => {
-    const editar = listadoCanciones.findIndex((cancion) => cancion.Id === ID);
-    if (editar !== -1) {
-      listadoCanciones[editar].Grupo = Grupo.value;
-      listadoCanciones[editar].Categoria = Categoria.value;
-      listadoCanciones[editar].Titulo = Titulo.value;
-      listadoCanciones[editar].Duracion = Duracion.value;
-      listadoCanciones[editar].Imagen = Imagen.value;
-      listadoCanciones[editar].Cancion = Cancion.value;
-      guardarEnLocalStorage();
-      location.reload();
-      ocultarModal();
-    }
-  };
-
-  //////////////Ventana Cancion crear con exito/////////////
-  const laCancionfuecreadoventana = () => {
-    Swal.fire({
-      title: "La Canción fue creada con éxito!",
-      text: "Disfruta tu nueva canción.",
-      icon: "success",
-    });
-  };
-
-
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const formularioCanciones = document.getElementById('formularioCanciones');
 
     formularioCanciones.addEventListener('submit', function(event) {
@@ -194,9 +210,33 @@
     });
   });
 
+//////////////////Boton Buscar //////////////////////
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("formularioCanciones")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
 
+      Imagen = document.getElementById("Imagen").value;
+      Titulo = document.getElementById("Titulo").value;
 
+      // Obtener datos existentes o inicializar un array vacío
+      const storedData =
+        JSON.parse(localStorage.getItem("listadoCancionesKey")) || [];
 
-  btnCanciones.addEventListener("click", mostrarModal);
-  formularioCanciones.addEventListener("submit", administradorDeCanciones);
-  cargaCancionesInicial();
+      // Añadir nuevo elemento
+      storedData.push({ Imagen, Titulo: Titulo });
+
+      // Guardar en localStorage
+      localStorage.setItem("listadoCancionesKey", JSON.stringify(storedData));
+
+      // Limpiar formulario
+      document.getElementById("formularioCanciones").reset();
+
+      alert("Datos guardados correctamente");
+    });
+});
+
+btnCanciones.addEventListener("click", mostrarModal);
+formularioCanciones.addEventListener("submit", administradorDeCanciones);
+cargaCancionesInicial();
