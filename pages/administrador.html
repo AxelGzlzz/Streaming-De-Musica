@@ -80,7 +80,7 @@
                   >Administrador</a
                 >
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown" id="loginDropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -103,6 +103,13 @@
                   <li><a class="dropdown-item" href="#">Registrarse</a></li>
                 </ul>
               </li>
+
+              <li class="nav-item" id="logoutItem" style="display: none">
+                <button id="logoutButton" class="btn btn-outline-danger">
+                  Cerrar Sesión
+                </button>
+              </li>
+
               <li class="nav-item">
                 <i class="bi bi-gear-fill text-danger nav-link"></i>
               </li>
@@ -160,8 +167,6 @@
       <hr />
     </main>
 
-
-    
     <div
       class="modal fade"
       id="ModalAdminCanciones"
@@ -289,6 +294,5 @@
     <script src="
     https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
     <script src="../JS/admin.js" type="module"></script>
-    
   </body>
 </html>

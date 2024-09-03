@@ -36,12 +36,13 @@
             ><i class="bi bi-youtube text-danger me-2"></i>YOUMUSIC</a
           >
           <div class="d-none d-md-block">
-            <form class="d-flex" role="search">
+            <form class="d-flex" role="search" id="formularioBuscar">
               <input
                 class="form-control me-2"
                 type="search"
                 placeholder="Qué queres escuchar?"
                 aria-label="Search"
+                id="inputBuscar"
               />
               <button class="btn btn-outline-danger" type="submit">
                 Buscar
@@ -78,7 +79,7 @@
                   >Administrador</a
                 >
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown" id="loginDropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -100,6 +101,12 @@
                   </li>
                   <li><a class="dropdown-item" href="#">Registrarse</a></li>
                 </ul>
+              </li>
+
+              <li class="nav-item" id="logoutItem" style="display: none">
+                <button id="logoutButton" class="btn btn-outline-danger">
+                  Cerrar Sesión
+                </button>
               </li>
               <li class="nav-item">
                 <i class="bi bi-gear-fill text-danger nav-link"></i>
@@ -125,7 +132,7 @@
         </div>
       </nav>
     </header>
-    <main class="container-fluid">
+    <main class="container-fluid pb-5">
       <section class="row">
         <article class="col-md-1">
           <div
@@ -220,7 +227,10 @@
       <div class="container mt-5">
         <h1 class="mb-4">Canciones Para Ti:</h1>
         <div id="Galeria" class="row">
-          <!-- Las imágenes y títulos se insertarán aquí por JavaScript -->
+          <!-- Las tarjetas se insertarán aquí por JavaScript -->
+        </div>
+        <div id="detalleCancion" class="container mt-5" style="display: none">
+          <!-- Los detalles de la canción se insertarán aquí dinámicamente -->
         </div>
       </div>
     </main>

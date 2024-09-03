@@ -25,7 +25,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-   <link rel="stylesheet" href="../css/SobreNosotros.css">
+    <link rel="stylesheet" href="../css/SobreNosotros.css" />
     <title>STREAMING DE MUSICA</title>
   </head>
   <body>
@@ -36,7 +36,12 @@
         >
         <div>
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Qué queres escuchar?" aria-label="Search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Qué queres escuchar?"
+              aria-label="Search"
+            />
             <button class="btn btn-outline-danger" type="submit">Buscar</button>
           </form>
         </div>
@@ -61,7 +66,7 @@
             <li class="nav-item">
               <a class="nav-link" href="./pages/administrador.html">Premium</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="loginDropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -72,10 +77,25 @@
                 Ingresá
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Inicia Sesión</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalLogin"
+                    >Inicia Sesión</a
+                  >
+                </li>
                 <li><a class="dropdown-item" href="#">Registrarse</a></li>
               </ul>
             </li>
+
+            <li class="nav-item" id="logoutItem" style="display: none">
+              <button id="logoutButton" class="btn btn-outline-danger">
+                Cerrar Sesión
+              </button>
+            </li>
+
             <li class="nav-item">
               <i class="bi bi-gear-fill text-danger nav-link"></i>
             </li>
@@ -87,90 +107,130 @@
       </div>
     </nav>
     <main>
-        <!-- main -->
+      <!-- main -->
 
-
-
-        <section class="container-fluid section-info">
-            <div class="row div-section " >
-                <div class="col-12 col-md-6">
-                    <img class="img-nosotros" src="../img/imagenes-page-nosotros/1642656848_542137_1642656976_noticia_normal.jpg" alt="straming">
-  
-                  
-                </div>
-                <div class="col-12 col-md-6">
-                       <h1 class="title-Sobrenosotros">Nuestra Mission</h1>
-                      <p class="parrafoSobrenosotros">
-                        "Nuestra misión es ofrecer una experiencia musical inigualable, conectando a los oyentes con la música que aman, en cualquier momento y lugar, con la más alta calidad de sonido. Creemos en el  Nos comprometemos a crear una plataforma accesible y diversa, donde todos los géneros y artistas tengan un espacio para brillar.personalizadas y contenido exclusivo que refleje los gustos y pasiones de nuestra audiencia global."
-                      </p> 
-                </div>
-            </div>
-  
-            <!--  -->
-          
-                <hr>    
-          <div class="row div-section">
-            <div class="col-12 col-md-6">
-            <img class="img-nosotros" src="../img/imagenes-page-nosotros/16126242166985474.jpg" alt="straming">   
-
-            </div>
-            <div class="col-12 col-md-6">
-           
-              <h1 class="title-Sobrenosotros">Actualización Continua</h1>
-              <p class="parrafoSobrenosotros">" Mantener nuestro catálogo siempre actualizado con lo mejor de la música, incorporando nuevas tendencias y éxitos mundiales para que nuestros usuarios estén al día con lo más relevante en el mundo musical.para ofrecer una selección diversa de géneros y artistas de todo el mundo, asegurando que cada usuario encuentre música que resuene con sus gustos y"</p> 
-
-
-            </div>
-        </div>
-        <hr>
-          <div class="row div-section">
-              <div class="col-12 col-md-6">
-                <img class="img-nosotros" src="../img/imagenes-page-nosotros/1366_2000.jpg" alt="straming">
-              </div>
-              <div class="col-12 col-md-6 ">
-             <h1 class="title-Sobrenosotros">Objetivos</h1>
-                   <li> <strong> Calidad de Sonido Excepcional:</strong> Brindar a nuestros usuarios una experiencia auditiva de la más alta calidad, con tecnología de vanguardia que garantice la pureza y claridad del sonido en cada reproducción.</li>
-                   <li><strong>Catálogo Amplio y Diverso: </strong> Ampliar continuamente nuestra biblioteca musical para ofrecer una selección diversa de géneros y artistas de todo el mundo, asegurando que cada usuario encuentre música que resuene con sus gustos y emociones.</li>
-                   <li><strong>Accesibilidad Global:</strong>  Hacer que nuestra plataforma sea accesible y fácil de usar para personas de todas las edades y en todas partes del mundo, superando barreras geográficas y culturales.</li>
-                   <li><strong>Apoyo a los Artistas:</strong>  Proveer a los artistas y creadores musicales una plataforma justa y equitativa para compartir su trabajo, ayudándoles a conectar con una audiencia global y a obtener la compensación justa por su arte.</li>
-
-              </div>
+      <section class="container-fluid section-info">
+        <div class="row div-section">
+          <div class="col-12 col-md-6">
+            <img
+              class="img-nosotros"
+              src="../img/imagenes-page-nosotros/1642656848_542137_1642656976_noticia_normal.jpg"
+              alt="straming"
+            />
           </div>
-        </section>
-        <hr>
-        <section class="container Nosotros">
-            <div class="row info">
-              <h1 class="title-quienessomos">Quienes somos</h1>
-              <div class="col-12  col-md-3  info-nosotros">  
-                 <img class="avatar" src="../img/avatar/3d-render-human-vector-43832539.jpg" alt="avatar">
-                 <p class="nombre">
-                    Gonzalez Axel</p>
-                 <p class="desarollador">Fronthend</p>
-                </div>
-              <div class="col-12  col-md-3  info-nosotros">  
-                  <img class="avatar" src="../img/avatar/OIP (1).jpeg" alt="avatar">
-                  <p class="nombre">
-                    Pereyra Franco</p>
-                  <p class="desarollador">Fronthend</p>
-                 </div>
-               <div class="col-12 col-md-3 info-nosotros">  
-                  <img class="avatar" src="../img/avatar/avatarIsma.jfif" alt="avatar">
-                  <p class="nombre">Ismael Vargas</p>
-                  <p class="desarollador">Fronthend</p>
-                  
-                 </div>
-                 <div class="col-12  col-md-3  info-nosotros">  
-                  <img class="avatar" src="../img/avatar/happy-smiling-young-man-avatar-3d-portrait-of-a-man-cartoon-character-people-illustration-isolated-on-white-background-vector.jpg" alt="avatar">
-                  <p class="nombre">Recalde Leonardo</p>
-                  <p class="desarollador">Fronthend</p>
-                  
-                 </div>
-            
-                 
-            </div>
-        </section>
-    
+          <div class="col-12 col-md-6">
+            <h1 class="title-Sobrenosotros">Nuestra Mission</h1>
+            <p class="parrafoSobrenosotros">
+              "Nuestra misión es ofrecer una experiencia musical inigualable,
+              conectando a los oyentes con la música que aman, en cualquier
+              momento y lugar, con la más alta calidad de sonido. Creemos en el
+              Nos comprometemos a crear una plataforma accesible y diversa,
+              donde todos los géneros y artistas tengan un espacio para
+              brillar.personalizadas y contenido exclusivo que refleje los
+              gustos y pasiones de nuestra audiencia global."
+            </p>
+          </div>
+        </div>
 
+        <!--  -->
+
+        <hr />
+        <div class="row div-section">
+          <div class="col-12 col-md-6">
+            <img
+              class="img-nosotros"
+              src="../img/imagenes-page-nosotros/16126242166985474.jpg"
+              alt="straming"
+            />
+          </div>
+          <div class="col-12 col-md-6">
+            <h1 class="title-Sobrenosotros">Actualización Continua</h1>
+            <p class="parrafoSobrenosotros">
+              " Mantener nuestro catálogo siempre actualizado con lo mejor de la
+              música, incorporando nuevas tendencias y éxitos mundiales para que
+              nuestros usuarios estén al día con lo más relevante en el mundo
+              musical.para ofrecer una selección diversa de géneros y artistas
+              de todo el mundo, asegurando que cada usuario encuentre música que
+              resuene con sus gustos y"
+            </p>
+          </div>
+        </div>
+        <hr />
+        <div class="row div-section">
+          <div class="col-12 col-md-6">
+            <img
+              class="img-nosotros"
+              src="../img/imagenes-page-nosotros/1366_2000.jpg"
+              alt="straming"
+            />
+          </div>
+          <div class="col-12 col-md-6">
+            <h1 class="title-Sobrenosotros">Objetivos</h1>
+            <li>
+              <strong> Calidad de Sonido Excepcional:</strong> Brindar a
+              nuestros usuarios una experiencia auditiva de la más alta calidad,
+              con tecnología de vanguardia que garantice la pureza y claridad
+              del sonido en cada reproducción.
+            </li>
+            <li>
+              <strong>Catálogo Amplio y Diverso: </strong> Ampliar continuamente
+              nuestra biblioteca musical para ofrecer una selección diversa de
+              géneros y artistas de todo el mundo, asegurando que cada usuario
+              encuentre música que resuene con sus gustos y emociones.
+            </li>
+            <li>
+              <strong>Accesibilidad Global:</strong> Hacer que nuestra
+              plataforma sea accesible y fácil de usar para personas de todas
+              las edades y en todas partes del mundo, superando barreras
+              geográficas y culturales.
+            </li>
+            <li>
+              <strong>Apoyo a los Artistas:</strong> Proveer a los artistas y
+              creadores musicales una plataforma justa y equitativa para
+              compartir su trabajo, ayudándoles a conectar con una audiencia
+              global y a obtener la compensación justa por su arte.
+            </li>
+          </div>
+        </div>
+      </section>
+      <hr />
+      <section class="container Nosotros">
+        <div class="row info">
+          <h1 class="title-quienessomos">Quienes somos</h1>
+          <div class="col-12 col-md-3 info-nosotros">
+            <img
+              class="avatar"
+              src="../img/avatar/3d-render-human-vector-43832539.jpg"
+              alt="avatar"
+            />
+            <p class="nombre">Gonzalez Axel</p>
+            <p class="desarollador">Fronthend</p>
+          </div>
+          <div class="col-12 col-md-3 info-nosotros">
+            <img class="avatar" src="../img/avatar/OIP (1).jpeg" alt="avatar" />
+            <p class="nombre">Pereyra Franco</p>
+            <p class="desarollador">Fronthend</p>
+          </div>
+          <div class="col-12 col-md-3 info-nosotros">
+            <img
+              class="avatar"
+              src="../img/avatar/avatarIsma.jfif"
+              alt="avatar"
+            />
+            <p class="nombre">Ismael Vargas</p>
+            <p class="desarollador">Fronthend</p>
+          </div>
+          <div class="col-12 col-md-3 info-nosotros">
+            <img
+              class="avatar"
+              src="../img/avatar/happy-smiling-young-man-avatar-3d-portrait-of-a-man-cartoon-character-people-illustration-isolated-on-white-background-vector.jpg"
+              alt="avatar"
+            />
+            <p class="nombre">Recalde Leonardo</p>
+            <p class="desarollador">Fronthend</p>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="bg-body-tertiary">
       <section class="container-fluid">
