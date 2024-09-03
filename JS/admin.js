@@ -183,7 +183,29 @@ const laCancionfuecreadoventana = () => {
   });
 };
 
+document.addEventListener('DOMContentLoaded', function() {
+  const formularioCanciones = document.getElementById('formularioCanciones');
 
+  formularioCanciones.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+
+      // Validar campos
+      if (!Imagen || !Titulo) {
+          alert('Por favor, ingrese la URL de la imagen y el título.');
+          return;
+      }
+
+      // Obtener las imágenes almacenadas
+      const listadoCanciones = JSON.parse(localStorage.getItem('listadoCancionesKey')) || [];
+      listadoCanciones.push({ Imagen: Imagen, Imagen: Imagen });
+      guardarEnLocalStorage();
+
+      // Cerrar el modal y limpiar el formulario
+      $('#ModalAdminCanciones').modal('hide');
+      formularioCanciones.reset();
+  });
+});
 
 btnCanciones.addEventListener("click", mostrarModal);
 formularioCanciones.addEventListener("submit", administradorDeCanciones);
